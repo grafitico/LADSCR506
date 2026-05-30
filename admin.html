@@ -119,14 +119,33 @@
       font-size:11px; color:var(--muted); margin:0 0 12px;
       font-family:ui-monospace,monospace; letter-spacing:.3px;
     }
-    .item__actions{margin-top:auto; display:flex; gap:8px;}
-    .item__actions label{
+    .item__actions{margin-top:auto; display:flex; gap:6px; flex-wrap:wrap;}
+    .item__actions label, .item__actions .url-btn{
       flex:1; cursor:pointer; background:var(--blue);
       color:#fff; border-radius:8px; padding:10px;
       text-align:center; font-size:13px; font-weight:700;
+      border:0; font-family:inherit;
     }
-    .item__actions label:hover{background:#1976d2;}
+    .item__actions label:hover, .item__actions .url-btn:hover{background:#1976d2;}
+    .item__actions .url-btn{background:var(--surface); border:1px solid var(--line); color:var(--text);}
+    .item__actions .url-btn:hover{background:var(--bg-2);}
     .item__actions input[type=file]{display:none;}
+    .item__url-row{
+      display:none; gap:6px; margin-top:8px; width:100%;
+    }
+    .item__url-row.is-open{display:flex;}
+    .item__url-row input{
+      flex:1; min-width:0; padding:8px 10px; border-radius:8px;
+      background:var(--bg-2); border:1px solid var(--line);
+      color:var(--text); font-size:12px; font-family:inherit;
+    }
+    .item__url-row input:focus{outline:none; border-color:var(--blue);}
+    .item__url-row button{
+      padding:8px 12px; border-radius:8px; border:0;
+      background:var(--accent); color:#fff; font-weight:700;
+      font-size:12px; cursor:pointer; font-family:inherit;
+    }
+    .item__url-row button:hover{background:var(--accent-2);}
     .item.is-uploading .item__preview::after{
       content:""; position:absolute; inset:0;
       background:rgba(13,27,42,.7); backdrop-filter:blur(2px);
@@ -216,6 +235,7 @@
         <span class="brand">LADS · Panel</span>
         <span class="spacer"></span>
         <span class="meta" id="branch-info"></span>
+        <a href="#" id="link-reset-token">Cambiar token</a>
         <a href="#" id="link-logout">Cerrar sesión</a>
       </div>
 
@@ -389,6 +409,17 @@
       show('lock');
     });
 
+    // ========== RESET TOKEN ==========
+    document.getElementById('link-reset-token').addEventListener('click', (e) => {
+      e.preventDefault();
+      if(!confirm('¿Cambiar el token de GitHub? El actual se borrará y tendrás que pegar uno nuevo.')) return;
+      localStorage.removeItem('lads_pat_enc');
+      session.pat = null;
+      document.getElementById('pat').value = '';
+      document.getElementById('setup-err').textContent = '';
+      show('setup');
+    });
+
     // ========== ENTER MAIN ==========
     async function enterMain(){
       show('main');
@@ -433,9 +464,14 @@
             <p class="item__slug">${p.slug}</p>
             <div class="item__actions">
               <label>
-                Subir nueva
+                Subir archivo
                 <input type="file" accept="image/*" />
               </label>
+              <button type="button" class="url-btn">Pegar URL</button>
+            </div>
+            <div class="item__url-row">
+              <input type="url" placeholder="https://...jpg / .png / .webp" />
+              <button type="button">Cargar</button>
             </div>
           </div>
         `;
@@ -453,8 +489,54 @@
           if(file) uploadImage(p.slug, file, it);
           e.target.value = '';
         });
+
+        const urlRow = it.querySelector('.item__url-row');
+        const urlInput = urlRow.querySelector('input');
+        const urlSubmit = urlRow.querySelector('button');
+        it.querySelector('.url-btn').addEventListener('click', () => {
+          urlRow.classList.toggle('is-open');
+          if(urlRow.classList.contains('is-open')) urlInput.focus();
+        });
+        const doUrlUpload = async () => {
+          const url = urlInput.value.trim();
+          if(!url) return;
+          try{
+            const blob = await fetchImageFromUrl(url);
+            urlInput.value = '';
+            urlRow.classList.remove('is-open');
+            await uploadImage(p.slug, blob, it);
+          }catch(err){
+            toast('Error al cargar URL: ' + err.message, 'err');
+          }
+        };
+        urlSubmit.addEventListener('click', doUrlUpload);
+        urlInput.addEventListener('keydown', (e) => {
+          if(e.key === 'Enter'){ e.preventDefault(); doUrlUpload(); }
+        });
+
         grid.appendChild(it);
       });
+    }
+
+    // ========== IMAGE FROM URL ==========
+    async function fetchImageFromUrl(url){
+      try{ new URL(url); }catch(_){ throw new Error('URL inválida'); }
+      // Try direct fetch first (works if origin allows CORS, e.g. same-domain or proper CORS headers)
+      try{
+        const r = await fetch(url, { mode:'cors' });
+        if(r.ok){
+          const blob = await r.blob();
+          if(blob.type.startsWith('image/')) return blob;
+        }
+      }catch(_){ /* CORS or network: fall through to proxy */ }
+      // Fallback: route through images.weserv.nl, a public image proxy with CORS headers
+      const stripped = url.replace(/^https?:\/\//,'');
+      const proxied = `https://images.weserv.nl/?url=${encodeURIComponent(stripped)}`;
+      const r2 = await fetch(proxied);
+      if(!r2.ok) throw new Error('No se pudo descargar la imagen (' + r2.status + ')');
+      const blob = await r2.blob();
+      if(!blob.type.startsWith('image/')) throw new Error('La URL no parece ser una imagen');
+      return blob;
     }
 
     // ========== IMAGE PROCESSING + UPLOAD ==========
@@ -518,6 +600,11 @@
       });
       if(!r.ok){
         const t = await r.text();
+        if(r.status === 403 || r.status === 401){
+          const e = new Error('Token sin permisos para escribir. Regeneralo en GitHub con Contents: Read & write sobre grafitico/LADSCR506 y usá "Cambiar token".');
+          e.code = 'TOKEN_DENIED';
+          throw e;
+        }
         throw new Error('GitHub PUT '+r.status+': '+t.substring(0,200));
       }
       return r.json();
@@ -544,6 +631,15 @@
       }catch(err){
         toast('Error: ' + err.message, 'err');
         console.error(err);
+        if(err.code === 'TOKEN_DENIED'){
+          // Drop stored token so the user is prompted to enter a new one.
+          localStorage.removeItem('lads_pat_enc');
+          setTimeout(() => {
+            if(confirm('El token guardado no puede escribir en el repo. ¿Cambiarlo ahora?')){
+              show('setup');
+            }
+          }, 300);
+        }
       }finally{
         itemEl.classList.remove('is-uploading');
       }
