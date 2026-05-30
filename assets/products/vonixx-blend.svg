@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d1b2a"/>
+      <stop offset="100%" stop-color="#122436"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" fill="url(#bg)"/>
+  <rect x="100" y="60" width="200" height="220" rx="8" fill="#0c2038" stroke="#2196F3" stroke-width="1.5"/>
+  <rect x="108" y="68" width="184" height="60" rx="4" fill="#091826"/>
+  <text x="200" y="106" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="32" font-weight="900" fill="#2196F3" letter-spacing="2">BLEND</text>
+  <rect x="108" y="140" width="184" height="100" rx="4" fill="#0f2840"/>
+  <text x="200" y="182" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" fill="#9ab0c7" letter-spacing="2">CERAMIC &amp; CARNAUBA</text>
+  <text x="200" y="204" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="14" font-weight="900" fill="#fff" letter-spacing="1">SPRAY WAX</text>
+  <text x="200" y="222" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#666" letter-spacing="1">500 ML</text>
+  <text x="200" y="320" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="14" font-weight="900" fill="#2196F3" letter-spacing="3">VONIXX</text>
+  <text x="200" y="344" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" fill="#9ab0c7" letter-spacing="2">CERÁMICA + CARNAUBA</text>
+</svg>

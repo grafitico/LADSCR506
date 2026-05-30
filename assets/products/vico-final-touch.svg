@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <rect width="400" height="400" fill="#0d1b2a"/>
+  <rect x="155" y="50" width="90" height="230" rx="8" fill="#142a40" stroke="#e91e8c" stroke-width="1.5"/>
+  <rect x="163" y="58" width="74" height="40" rx="4" fill="#0a1622"/>
+  <text x="200" y="84" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="11" font-weight="900" fill="#2196F3" letter-spacing="2">VICO</text>
+  <rect x="163" y="110" width="74" height="80" rx="4" fill="#0f1e30"/>
+  <text x="200" y="146" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="11" font-weight="900" fill="#e91e8c">FINAL</text>
+  <text x="200" y="166" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="11" font-weight="900" fill="#e91e8c">TOUCH</text>
+  <text x="200" y="205" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" fill="#666" letter-spacing="1">500 ML</text>
+  <text x="200" y="320" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="16" font-weight="900" fill="#2196F3" letter-spacing="3">VICO</text>
+  <text x="200" y="344" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" fill="#9ab0c7" letter-spacing="2">QUICK DETAILER</text>
+</svg>

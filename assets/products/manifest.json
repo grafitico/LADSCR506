@@ -1,0 +1,164 @@
+{
+  "_meta": {
+    "generated": "2026-05-30",
+    "note": "Images could not be downloaded due to network proxy restrictions. All target sites return 'Host not in allowlist'. This manifest documents found product URLs and exact image paths for manual download or future use when network access is available. Image URLs were found via GitHub code search (menzerna), web search, and site structure analysis.",
+    "accessibleNetworkDomains": ["registry.npmjs.org", "pypi.org", "raw.githubusercontent.com", "api.github.com", "hub.docker.com"],
+    "blockedDomains": ["vonixxcostarica.com", "menzerna.com", "fireball-usa.shop", "malcoautomotive.com", "cdn.shopify.com", "static.wixstatic.com", "m.media-amazon.com"]
+  },
+  "products": [
+    {
+      "brand": "Vonixx Costa Rica",
+      "name": "V-MOL Biodegradable Heavy Dirt Shampoo",
+      "file": "vonixx-v-mol.jpg",
+      "status": "not_downloaded",
+      "productUrl": "https://vonixxcostarica.com/products/v-mol",
+      "sourceUrl": "https://cdn.shopify.com (store: vonixxcostarica.myshopify.com)",
+      "amazonAsin": "B0C59LT25K",
+      "notes": "Shopify store. Image available via Shopify CDN once store ID is known."
+    },
+    {
+      "brand": "Vonixx Costa Rica",
+      "name": "INTENSE Interior Plastic Protectant (Matte Finish)",
+      "file": "vonixx-intense.jpg",
+      "status": "not_downloaded",
+      "productUrl": "https://vonixxcostarica.com/products/intense",
+      "sourceUrl": "https://cdn.shopify.com (store: vonixxcostarica.myshopify.com)",
+      "amazonAsin": "B08B1VX8RY",
+      "notes": "500ml version ASIN B08B1VX8RY, 1.5L version ASIN B0CGJHK2NC"
+    },
+    {
+      "brand": "Vonixx Costa Rica",
+      "name": "BLEND Ceramic & Carnauba Spray Wax",
+      "file": "vonixx-blend-spray.jpg",
+      "status": "not_downloaded",
+      "productUrl": "https://vonixxcostarica.com/products/vonixx-blend-ceramic-carnauba-spray-wax",
+      "sourceUrl": "https://cdn.shopify.com (store: vonixxcostarica.myshopify.com)",
+      "notes": ""
+    },
+    {
+      "brand": "Vonixx Costa Rica",
+      "name": "BLEND Paste Wax",
+      "file": "vonixx-blend-paste.jpg",
+      "status": "not_downloaded",
+      "productUrl": "https://vonixxcostarica.com/products/blend-paste-wax",
+      "sourceUrl": "https://cdn.shopify.com (store: vonixxcostarica.myshopify.com)",
+      "notes": ""
+    },
+    {
+      "brand": "Vonixx Costa Rica",
+      "name": "BLEND Spray Black",
+      "file": "vonixx-blend-spray-black.jpg",
+      "status": "not_downloaded",
+      "productUrl": "https://vonixxcostarica.com/products/blend-spray-black",
+      "sourceUrl": "https://cdn.shopify.com (store: vonixxcostarica.myshopify.com)",
+      "notes": ""
+    },
+    {
+      "brand": "Vonixx Costa Rica",
+      "name": "Paños Microfibra (Microfiber Cloths/Towels)",
+      "file": "vonixx-panios-microfibra.jpg",
+      "status": "not_downloaded",
+      "productUrl": "https://vonixxcostarica.com/collections/todos-los-productos",
+      "sourceUrl": "https://cdn.shopify.com (store: vonixxcostarica.myshopify.com)",
+      "notes": "Available in the full catalog at /collections/todos-los-productos or /collections/all"
+    },
+    {
+      "brand": "Menzerna",
+      "name": "Heavy Cut Compound 400 (HCC400)",
+      "file": "menzerna-hcc400.jpg",
+      "status": "not_downloaded",
+      "productUrl": "https://www.menzerna.com/car-care/car-polish/products/details/heavy-cut-compound-400",
+      "sourceUrl": "https://www.menzerna.com/fileadmin/_processed_/4/1/csm_menzerna_HCC_400_696x396_92b3ed9ab7.jpg",
+      "sourceUrlHiRes": "https://www.menzerna.com/fileadmin/ns_theme_menzerna/Bilder/Autopolitur/Produktbilder/Produkt_Hintergrund/menzerna_HCC400_1100x1100.png",
+      "sourceUrlCutout": "https://www.menzerna.com/fileadmin/ns_theme_menzerna/Bilder/Autopolitur/Produktbilder/Produkt_freigestellt/Autopolitur_Heavy_Cut_Compound_400_IF_freigestellt_1100x1100.png",
+      "notes": "Exact image paths found via GitHub repo oguzhanguvenkaya/menzernaturkiye (cached HTML of menzerna.com)"
+    },
+    {
+      "brand": "Menzerna",
+      "name": "Medium Cut Polish 2500 (MCP2500)",
+      "file": "menzerna-mcp2500.jpg",
+      "status": "not_downloaded",
+      "productUrl": "https://www.menzerna.com/car-care/car-polish/products/details/medium-cut-polish-2500",
+      "sourceUrl": "https://www.menzerna.com/fileadmin/_processed_/9/1/csm_menzerna_MCP_2500_V1_696x396_02a9d551b8.jpg",
+      "sourceUrlAlt": "https://www.menzerna.com/fileadmin/_processed_/9/1/csm_menzerna_MCP_2500_V1_696x396_7bdeef72db.jpg",
+      "notes": "Exact image paths found via GitHub repo oguzhanguvenkaya/menzernaturkiye"
+    },
+    {
+      "brand": "Menzerna",
+      "name": "Super Finish Plus 3800 (SFP3800)",
+      "file": "menzerna-sfp3800.jpg",
+      "status": "not_downloaded",
+      "productUrl": "https://www.menzerna.com/car-care/car-polish/products/details/super-finish-plus-3800",
+      "sourceUrl": "https://www.menzerna.com/fileadmin/_processed_/b/d/csm_menzerna_SFP3800_V1_696x396_c7b61c1e20.jpg",
+      "sourceUrlAlt": "https://www.menzerna.com/fileadmin/_processed_/b/d/csm_menzerna_SFP3800_V1_696x396_3e642d5abe.jpg",
+      "notes": "Exact image paths found via GitHub repo oguzhanguvenkaya/menzernaturkiye"
+    },
+    {
+      "brand": "Menzerna",
+      "name": "Cut Force Pro (CFP)",
+      "file": "menzerna-cut-force-pro.jpg",
+      "status": "not_downloaded",
+      "productUrl": "https://www.menzerna.com/car-care/car-polish/products/details/cut-force-pro",
+      "sourceUrl": "https://www.menzerna.com/fileadmin/_processed_/b/d/csm_menzerna-Thumbnail-mit-Auto-CFP_Teaser-EN_0a94b6b282.jpg",
+      "sourceUrlMailing": "https://www.menzerna.com/mailing/user_upload/menzerna-Webmotiv-quadratisch-mit-Auto-CFP.jpg",
+      "notes": "Exact image paths found via GitHub repo oguzhanguvenkaya/menzernaturkiye"
+    },
+    {
+      "brand": "Menzerna",
+      "name": "One-Step Polish 3in1",
+      "file": "menzerna-one-step-polish.jpg",
+      "status": "not_downloaded",
+      "productUrl": "https://www.menzerna.com/car-care/car-polish/products/details/one-step-polish-3in1",
+      "sourceUrl": "https://www.menzerna.com/fileadmin/_processed_/e/0/csm_menzerna_3in1_V1_696x396_ccc80401f6.jpg",
+      "sourceUrlAlt": "https://www.menzerna.com/fileadmin/_processed_/e/0/csm_menzerna_3in1_V1_696x396_5195a928f6.jpg",
+      "notes": "Exact image paths found via GitHub repo oguzhanguvenkaya/menzernaturkiye"
+    },
+    {
+      "brand": "Fireball USA",
+      "name": "Hydro Shampoo (SiO2 Ceramic Shampoo)",
+      "file": "fireball-hydro-shampoo.jpg",
+      "status": "not_downloaded",
+      "productUrl": "https://fireball-usa.shop/product/hydro-shampoo/",
+      "productUrlPro": "https://www.fireball-usa.shop/product-page/hydro-shampoo-ph-neutral",
+      "sourceUrl": "https://static.wixstatic.com/media/ (Wix-hosted store)",
+      "notes": "Fireball USA runs on Wix platform. Also available at retailer msdistributorspr.com/products/fireball-hydro-shampoo"
+    },
+    {
+      "brand": "Fireball USA",
+      "name": "Hydro Foam (SiO2 Ceramic Foam Cannon Sealant)",
+      "file": "fireball-hydro-foam.jpg",
+      "status": "not_downloaded",
+      "productUrl": "https://fireball-usa.shop/product/hydro-foam/",
+      "sourceUrl": "https://static.wixstatic.com/media/ (Wix-hosted store)",
+      "notes": "Two-in-one ceramic foam cannon wash. Also at msdistributorspr.com/products/fireball-hydro-foam"
+    },
+    {
+      "brand": "Malco Automotive",
+      "name": "Blue Blazes™ All-In-One Dressing (VOC Compliant)",
+      "file": "malco-blue-blazes-voc.jpg",
+      "status": "not_downloaded",
+      "productUrl": "https://malcoautomotive.com/products/blue-blazes%E2%84%A2-all-in-one-dressing-voc",
+      "sourceUrl": "https://cdn.shopify.com (store: malcoautomotive.myshopify.com)",
+      "amazonAsin": "B0DYZ4DHXD",
+      "notes": "Shopify store. Amazon 16oz ASIN B0DYZ4DHXD. Also at carolinadetailsupply.com, summitracing.com"
+    },
+    {
+      "brand": "Malco Automotive",
+      "name": "Blue Blazes® All-Purpose Premium Dressing (Non-VOC)",
+      "file": "malco-blue-blazes-non-voc.jpg",
+      "status": "not_downloaded",
+      "productUrl": "https://malcoautomotive.com/products/blue-blazes%C2%AE-all-purpose-premium-dressing-non-voc",
+      "sourceUrl": "https://cdn.shopify.com (store: malcoautomotive.myshopify.com)",
+      "notes": "Non-VOC version of Blue Blazes premium dressing"
+    },
+    {
+      "brand": "Malco Automotive",
+      "name": "A&L Cosmoline Remover",
+      "file": "malco-al-cosmoline-remover.jpg",
+      "status": "not_downloaded",
+      "productUrl": "https://malcoautomotive.com/products/a-l-cosmoline-remover",
+      "sourceUrl": "https://cdn.shopify.com (store: malcoautomotive.myshopify.com)",
+      "notes": "Professional dealership prep solvent. Available at detailerschoice.com, carolinadetailsupply.com, summitracing.com (part MLP-116832), everestautomotivemarket.com"
+    }
+  ]
+}

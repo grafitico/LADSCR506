@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <rect width="400" height="400" fill="#1a1a2e"/>
+  <rect x="120" y="60" width="160" height="240" rx="10" fill="#2a2a4a" stroke="#00bcd4" stroke-width="2"/>
+  <rect x="128" y="78" width="144" height="50" rx="4" fill="#1a1a3a"/>
+  <text x="200" y="112" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="16" font-weight="900" fill="#00bcd4" letter-spacing="3">VINTEX</text>
+  <rect x="128" y="140" width="144" height="100" rx="4" fill="#111130"/>
+  <text x="200" y="185" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="30" font-weight="900" fill="#fff">ALUMAX</text>
+  <text x="200" y="215" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#9ab0c7" letter-spacing="1.5">LIMPIADOR ÁCIDO</text>
+  <text x="200" y="258" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#666" letter-spacing="1">1.5 L · USO PROFESIONAL</text>
+  <text x="200" y="330" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" fill="#9ab0c7" letter-spacing="2">ALUMINIO &amp; CARROCERÍAS</text>
+</svg>

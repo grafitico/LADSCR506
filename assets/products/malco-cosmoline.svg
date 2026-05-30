@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <rect width="400" height="400" fill="#0a0a0a"/>
+  <rect x="0" y="0" width="400" height="10" fill="#cc2222"/>
+  <rect x="0" y="390" width="400" height="10" fill="#cc2222"/>
+  <rect x="80" y="70" width="240" height="260" rx="8" fill="#111" stroke="#cc2222" stroke-width="2"/>
+  <rect x="88" y="78" width="224" height="80" rx="4" fill="#1a0a0a"/>
+  <text x="200" y="108" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="20" font-weight="900" fill="#fff" letter-spacing="2">MALCO</text>
+  <text x="200" y="148" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#9ab0c7" letter-spacing="3">AUTOMOTIVE DETAILING</text>
+  <rect x="88" y="168" width="224" height="110" rx="4" fill="#0f0a0a"/>
+  <text x="200" y="202" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="14" font-weight="900" fill="#fff">A &amp; L COSMOLINE</text>
+  <text x="200" y="232" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="24" font-weight="900" fill="#cc2222">REMOVER</text>
+  <text x="200" y="258" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" fill="#666" letter-spacing="1.5">INDUSTRIAL DEGREASER · 1 GAL</text>
+  <text x="200" y="344" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" fill="#9ab0c7" letter-spacing="2">USA · PRO AUTOMOTIVE</text>
+</svg>

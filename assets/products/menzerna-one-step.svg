@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <rect width="400" height="400" fill="#111"/>
+  <rect x="0" y="0" width="400" height="8" fill="#cc1f1a"/>
+  <rect x="0" y="392" width="400" height="8" fill="#cc1f1a"/>
+  <rect x="60" y="60" width="280" height="280" rx="140" fill="#1a1a1a" stroke="#9b59b6" stroke-width="2"/>
+  <text x="200" y="148" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="14" font-weight="900" fill="#fff" letter-spacing="3">menzerna</text>
+  <text x="200" y="196" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="18" font-weight="900" fill="#9b59b6">ONE-STEP</text>
+  <text x="200" y="222" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="26" font-weight="900" fill="#fff">POLISH</text>
+  <text x="200" y="265" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="20" font-weight="900" fill="#9b59b6">3 IN 1</text>
+  <text x="200" y="310" text-anchor="middle" font-family="Arial,sans-serif" font-size="11" fill="#888" letter-spacing="2">CUT · GLOSS · WAX</text>
+</svg>

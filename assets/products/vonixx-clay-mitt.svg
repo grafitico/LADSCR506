@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <rect width="400" height="400" fill="#0d1b2a"/>
+  <path d="M200 80 C160 80 120 110 120 150 L120 260 C120 290 160 310 200 310 C240 310 280 290 280 260 L280 150 C280 110 240 80 200 80 Z" fill="#142a40" stroke="#2196F3" stroke-width="2"/>
+  <path d="M200 80 C160 80 120 110 120 150" fill="none" stroke="#1f3a55" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="200" y="200" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="11" font-weight="900" fill="#2196F3" letter-spacing="1">LUVA PRÉ-</text>
+  <text x="200" y="220" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="11" font-weight="900" fill="#fff">POLIMENTO</text>
+  <text x="200" y="320" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="14" font-weight="900" fill="#2196F3" letter-spacing="3">VONIXX</text>
+  <text x="200" y="344" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" fill="#9ab0c7" letter-spacing="2">CLAY MITT · DESCONTAMINANTE</text>
+</svg>

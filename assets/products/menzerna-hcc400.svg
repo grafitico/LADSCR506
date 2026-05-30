@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <rect width="400" height="400" fill="#111"/>
+  <rect x="0" y="0" width="400" height="8" fill="#cc1f1a"/>
+  <rect x="0" y="392" width="400" height="8" fill="#cc1f1a"/>
+  <rect x="60" y="60" width="280" height="280" rx="140" fill="#1a1a1a" stroke="#cc1f1a" stroke-width="2"/>
+  <rect x="80" y="168" width="240" height="64" fill="#222"/>
+  <text x="200" y="148" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="14" font-weight="900" fill="#fff" letter-spacing="3">menzerna</text>
+  <text x="200" y="198" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="22" font-weight="900" fill="#cc1f1a" letter-spacing="1">HEAVY CUT</text>
+  <text x="200" y="222" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="22" font-weight="900" fill="#fff" letter-spacing="1">COMPOUND</text>
+  <text x="200" y="268" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="52" font-weight="900" fill="#cc1f1a">400</text>
+  <text x="200" y="310" text-anchor="middle" font-family="Arial,sans-serif" font-size="11" fill="#888" letter-spacing="2">PASO 1 · CORTE PESADO</text>
+</svg>

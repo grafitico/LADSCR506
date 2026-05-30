@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <rect width="400" height="400" fill="#111"/>
+  <rect x="0" y="0" width="400" height="8" fill="#cc1f1a"/>
+  <rect x="0" y="392" width="400" height="8" fill="#cc1f1a"/>
+  <rect x="60" y="60" width="280" height="280" rx="8" fill="#1a1a1a" stroke="#cc1f1a" stroke-width="2"/>
+  <text x="200" y="148" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="14" font-weight="900" fill="#fff" letter-spacing="3">menzerna</text>
+  <text x="200" y="198" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="28" font-weight="900" fill="#cc1f1a">CUT</text>
+  <text x="200" y="230" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="28" font-weight="900" fill="#cc1f1a">FORCE</text>
+  <text x="200" y="266" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="26" font-weight="900" fill="#daa520">PRO</text>
+  <text x="200" y="310" text-anchor="middle" font-family="Arial,sans-serif" font-size="11" fill="#888" letter-spacing="2">COMPOUND &amp; FINISH · PRO</text>
+</svg>
