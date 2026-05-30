@@ -19,7 +19,7 @@
   --surface:   #142a40;
   --line:      #1f3a55;
   --text:      var(--blanco);
-  --muted:     #9ab0c7;
+  --muted:     #b8c8db;
   --accent:    var(--naranja-energia);
   --accent-2:  #ff8533;
   --blue:      var(--azul-electrico);
@@ -265,8 +265,8 @@ section { padding: clamp(70px, 9vw, 120px) 0; }
 
 /* === GRIDS === */
 .grid { display: grid; gap: 22px; }
-.grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.grid--3 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.grid--4 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
 
 /* === BENEFICIOS === */
 .beneficios { background: var(--bg-2); }

@@ -22,12 +22,14 @@
     });
   }
 
-  const onScroll = () => {
-    if (window.scrollY > 8) nav.classList.add('is-scrolled');
-    else nav.classList.remove('is-scrolled');
-  };
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
+  if (nav) {
+    const onScroll = () => {
+      if (window.scrollY > 8) nav.classList.add('is-scrolled');
+      else nav.classList.remove('is-scrolled');
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
 
   // === Catálogo: filtros por categoría ===
   const filters = document.querySelectorAll('.filter');
@@ -42,8 +44,11 @@
         const target = btn.dataset.filter;
 
         filters.forEach((f) => {
-          f.classList.toggle('is-active', f === btn);
-          f.setAttribute('aria-selected', f === btn ? 'true' : 'false');
+          const isActive = f === btn;
+          f.classList.toggle('is-active', isActive);
+          f.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          if (isActive) f.setAttribute('aria-current', 'true');
+          else f.removeAttribute('aria-current');
         });
 
         let visible = 0;
