@@ -22,12 +22,14 @@
     });
   }
 
-  const onScroll = () => {
-    if (window.scrollY > 8) nav.classList.add('is-scrolled');
-    else nav.classList.remove('is-scrolled');
-  };
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
+  if (nav) {
+    const onScroll = () => {
+      if (window.scrollY > 8) nav.classList.add('is-scrolled');
+      else nav.classList.remove('is-scrolled');
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
 
   // === Catálogo: filtros por categoría ===
   const filters = document.querySelectorAll('.filter');
@@ -42,8 +44,11 @@
         const target = btn.dataset.filter;
 
         filters.forEach((f) => {
-          f.classList.toggle('is-active', f === btn);
-          f.setAttribute('aria-selected', f === btn ? 'true' : 'false');
+          const isActive = f === btn;
+          f.classList.toggle('is-active', isActive);
+          f.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          if (isActive) f.setAttribute('aria-current', 'true');
+          else f.removeAttribute('aria-current');
         });
 
         let visible = 0;
@@ -55,6 +60,23 @@
 
         if (empty) empty.hidden = visible > 0;
       });
+    });
+  }
+
+  // === Entrada discreta al panel admin: triple-click en el copyright del footer ===
+  const yearSmall = year?.closest('small');
+  if (yearSmall) {
+    let clicks = 0, timer;
+    yearSmall.style.cursor = 'default';
+    yearSmall.addEventListener('click', () => {
+      clicks++;
+      clearTimeout(timer);
+      if (clicks >= 3) {
+        clicks = 0;
+        window.location.href = 'admin.html';
+        return;
+      }
+      timer = setTimeout(() => { clicks = 0; }, 600);
     });
   }
 })();

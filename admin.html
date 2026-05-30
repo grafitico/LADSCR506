@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="es-CR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Panel · LADS</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+  <style>
+    :root{
+      --bg:#0D1B2A; --bg-2:#0a1622; --surface:#142a40; --line:#1f3a55;
+      --text:#fff; --muted:#b8c8db;
+      --accent:#FF6A00; --accent-2:#ff8533;
+      --blue:#2196F3; --blue-soft:rgba(33,150,243,.12);
+      --ok:#25d366; --err:#ff5b5b; --warn:#f3a93b;
+      --radius:14px; --radius-lg:22px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+      background:linear-gradient(180deg,var(--bg) 0%,var(--bg-2) 100%);
+      color:var(--text); min-height:100vh; line-height:1.5;
+    }
+    .wrap{max-width:1100px; margin:0 auto; padding:32px 24px;}
+    .stage{display:none}
+    .stage.is-active{display:block}
+
+    /* === Login / setup === */
+    .gate{
+      max-width:420px; margin:8vh auto 0; background:var(--surface);
+      border:1px solid var(--line); border-radius:var(--radius-lg);
+      padding:36px; box-shadow:0 30px 60px -20px rgba(0,0,0,.55);
+    }
+    .gate h1{
+      margin:0 0 8px; font-size:22px; font-weight:800;
+      letter-spacing:.5px;
+    }
+    .gate p{color:var(--muted); margin:0 0 22px; font-size:14px;}
+    .gate label{display:block; font-size:12px; font-weight:700;
+      text-transform:uppercase; letter-spacing:1px; color:var(--muted);
+      margin:0 0 6px;}
+    .gate input, .gate textarea{
+      width:100%; padding:12px 14px; border-radius:10px;
+      background:var(--bg-2); border:1px solid var(--line);
+      color:var(--text); font-size:15px; font-family:inherit;
+    }
+    .gate input:focus, .gate textarea:focus{outline:none; border-color:var(--blue);}
+    .gate textarea{min-height:90px; resize:vertical;}
+    .gate .row{margin-bottom:16px;}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:8px; padding:13px 22px; border-radius:10px; border:0;
+      font-weight:700; font-size:14px; cursor:pointer; min-height:44px;
+      transition:transform .15s, background .15s, opacity .15s;
+      font-family:inherit; letter-spacing:.3px;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn:disabled{opacity:.5; cursor:not-allowed; transform:none;}
+    .btn--primary{background:var(--accent); color:#fff; width:100%;}
+    .btn--primary:hover{background:var(--accent-2)}
+    .btn--ghost{background:transparent; color:var(--muted); border:1px solid var(--line);}
+    .btn--sm{padding:10px 16px; font-size:13px; min-height:38px;}
+    .err-msg{color:var(--err); font-size:13px; margin-top:10px; min-height:18px;}
+    .ok-msg{color:var(--ok); font-size:13px; margin-top:10px; min-height:18px;}
+
+    .help{
+      background:var(--bg-2); border:1px solid var(--line);
+      border-radius:10px; padding:14px 16px; margin:16px 0;
+      font-size:13px; color:var(--muted);
+    }
+    .help ol{padding-left:20px; margin:8px 0;}
+    .help li{margin:4px 0;}
+    .help a{color:var(--blue); text-decoration:underline;}
+    .help code{
+      background:var(--bg); padding:2px 6px; border-radius:4px;
+      color:var(--accent); font-size:12px;
+    }
+
+    /* === Main panel === */
+    .panel-head{
+      display:flex; justify-content:space-between; align-items:center;
+      margin-bottom:24px; flex-wrap:wrap; gap:12px;
+    }
+    .panel-head h1{margin:0; font-size:22px; font-weight:800;}
+    .panel-head .meta{color:var(--muted); font-size:13px;}
+    .grid{
+      display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));
+      gap:18px;
+    }
+    .item{
+      background:var(--surface); border:1px solid var(--line);
+      border-radius:var(--radius); overflow:hidden;
+      display:flex; flex-direction:column;
+    }
+    .item__preview{
+      height:160px; background:
+        radial-gradient(60% 60% at 50% 50%, rgba(33,150,243,.22), transparent 70%),
+        linear-gradient(135deg, #142a40, #0a1622);
+      display:grid; place-items:center; overflow:hidden;
+      border-bottom:1px solid var(--line); position:relative;
+    }
+    .item__preview img{
+      max-width:100%; max-height:100%; padding:14px;
+      object-fit:contain; display:block;
+    }
+    .item__preview .badge{
+      position:absolute; top:8px; right:8px; font-size:10px;
+      background:var(--ok); color:#000; padding:3px 8px;
+      border-radius:999px; font-weight:800; letter-spacing:.5px;
+    }
+    .item__preview .badge--svg{background:var(--warn);}
+    .item__body{padding:14px; flex:1; display:flex; flex-direction:column;}
+    .item__name{
+      font-size:14px; font-weight:700; margin:0 0 4px;
+      line-height:1.3;
+    }
+    .item__slug{
+      font-size:11px; color:var(--muted); margin:0 0 12px;
+      font-family:ui-monospace,monospace; letter-spacing:.3px;
+    }
+    .item__actions{margin-top:auto; display:flex; gap:8px;}
+    .item__actions label{
+      flex:1; cursor:pointer; background:var(--blue);
+      color:#fff; border-radius:8px; padding:10px;
+      text-align:center; font-size:13px; font-weight:700;
+    }
+    .item__actions label:hover{background:#1976d2;}
+    .item__actions input[type=file]{display:none;}
+    .item.is-uploading .item__preview::after{
+      content:""; position:absolute; inset:0;
+      background:rgba(13,27,42,.7); backdrop-filter:blur(2px);
+    }
+    .item.is-uploading .item__preview::before{
+      content:"Subiendo..."; position:absolute; inset:0;
+      display:grid; place-items:center; color:#fff;
+      font-weight:700; z-index:1; font-size:14px;
+    }
+
+    .toast{
+      position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
+      background:var(--surface); border:1px solid var(--line);
+      border-radius:10px; padding:14px 22px; font-size:14px;
+      box-shadow:0 20px 40px -10px rgba(0,0,0,.5); z-index:1000;
+      opacity:0; pointer-events:none; transition:opacity .2s, transform .2s;
+    }
+    .toast.is-show{opacity:1; transform:translateX(-50%) translateY(-4px);}
+    .toast--ok{border-color:var(--ok);}
+    .toast--err{border-color:var(--err);}
+
+    .topbar{
+      display:flex; align-items:center; gap:14px; margin-bottom:20px;
+      padding:12px 18px; background:var(--surface);
+      border:1px solid var(--line); border-radius:12px;
+    }
+    .topbar .brand{font-weight:800; letter-spacing:1px; font-size:13px;}
+    .topbar .spacer{flex:1;}
+    .topbar a{color:var(--muted); font-size:13px; text-decoration:none;}
+    .topbar a:hover{color:var(--text);}
+    @media (max-width:600px){
+      .wrap{padding:20px 14px;}
+      .gate{padding:24px;}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <!-- ========== STAGE: PASSWORD LOCK ========== -->
+    <section class="stage is-active" id="stage-lock">
+      <div class="gate">
+        <h1>Panel privado</h1>
+        <p>Ingresá la contraseña para administrar el catálogo.</p>
+        <form id="form-lock">
+          <div class="row">
+            <label for="pwd">Contraseña</label>
+            <input type="password" id="pwd" autocomplete="current-password" required />
+          </div>
+          <button type="submit" class="btn btn--primary">Entrar</button>
+          <div class="err-msg" id="lock-err"></div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ========== STAGE: PAT SETUP ========== -->
+    <section class="stage" id="stage-setup">
+      <div class="gate">
+        <h1>Configuración inicial</h1>
+        <p>Una sola vez: necesitamos un token de GitHub para que el panel pueda guardar tus imágenes en el repositorio.</p>
+
+        <div class="help">
+          <strong>Cómo generarlo (4 pasos, ~1 min):</strong>
+          <ol>
+            <li>Abrí <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings/personal-access-tokens/new</a></li>
+            <li>Nombre: <code>LADS Admin</code> · Expiración: <code>No expiration</code> (o 1 año)</li>
+            <li>Repository access: <strong>Only select repositories</strong> → elegí <code>grafitico/LADSCR506</code></li>
+            <li>Permissions → Repository permissions → <strong>Contents: Read and write</strong></li>
+            <li>Click <strong>Generate token</strong>, copialo y pegalo abajo.</li>
+          </ol>
+        </div>
+
+        <form id="form-setup">
+          <div class="row">
+            <label for="pat">Token de GitHub (empieza con <code>github_pat_</code>)</label>
+            <textarea id="pat" required placeholder="github_pat_..." autocomplete="off" spellcheck="false"></textarea>
+          </div>
+          <button type="submit" class="btn btn--primary">Guardar y entrar</button>
+          <div class="err-msg" id="setup-err"></div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ========== STAGE: MAIN PANEL ========== -->
+    <section class="stage" id="stage-main">
+      <div class="topbar">
+        <span class="brand">LADS · Panel</span>
+        <span class="spacer"></span>
+        <span class="meta" id="branch-info"></span>
+        <a href="#" id="link-logout">Cerrar sesión</a>
+      </div>
+
+      <div class="panel-head">
+        <div>
+          <h1>Catálogo de productos</h1>
+          <p class="meta">Hacé click en "Subir nueva" para reemplazar cualquier imagen. Se optimiza y se sube sola al repositorio.</p>
+        </div>
+      </div>
+
+      <div class="grid" id="grid"></div>
+    </section>
+
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  (() => {
+    'use strict';
+
+    // ========== CONFIG ==========
+    const REPO_OWNER = 'grafitico';
+    const REPO_NAME  = 'LADSCR506';
+    const BRANCH     = 'main';
+    // SHA-256 of "LADS2026!" — change this hash to rotate the password.
+    // To compute a new hash: open browser console and run:
+    //   crypto.subtle.digest('SHA-256', new TextEncoder().encode('TU_NUEVA_PASS'))
+    //     .then(b => console.log([...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')))
+    const PWD_HASH = '58ed672393e2504430ee1548941a955e73fb02e45f0bbd2f697785aae3edb600';
+    // PAT pre-cargado, encriptado con la contraseña (AES-GCM + PBKDF2 SHA-256 / 600k iter).
+    // Sin la contraseña correcta es indescifrable. Para regenerar: rotá el token en GitHub y
+    // pedile a Claude que recompute este blob con tu nueva contraseña.
+    const EMBEDDED_PAT_BLOB = {
+      salt: "6de3f0d2982fa23bedf656bdcb87e499",
+      iv:   "bfb097fe372ef31ed0fa1f4a",
+      ct:   "fa60522b9ac29e699a97bf9ccbfc9c5f7d5fb47beb8ad6b960f21330cfeab6af2618640e956d9fe7390a96ff383bdefc0a42237da7f34109abf9ec2445ff104b4108976d9789ec6281d1de1263c7518f7932733b8fcc964a4abf03e0d8e33ad5dea4f75809ac21546d3355e6ac"
+    };
+
+    // ========== STAGE ROUTER ==========
+    const stages = {
+      lock:  document.getElementById('stage-lock'),
+      setup: document.getElementById('stage-setup'),
+      main:  document.getElementById('stage-main'),
+    };
+    function show(name){
+      Object.values(stages).forEach(s => s.classList.remove('is-active'));
+      stages[name].classList.add('is-active');
+    }
+
+    // ========== TOAST ==========
+    const toastEl = document.getElementById('toast');
+    let toastTimer;
+    function toast(msg, kind='ok'){
+      toastEl.textContent = msg;
+      toastEl.className = 'toast is-show toast--'+kind;
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(()=> toastEl.classList.remove('is-show'), 3500);
+    }
+
+    // ========== CRYPTO HELPERS ==========
+    const enc = new TextEncoder();
+    const dec = new TextDecoder();
+    function buf2hex(b){ return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join(''); }
+    function hex2buf(h){
+      const a = new Uint8Array(h.length/2);
+      for(let i=0;i<a.length;i++) a[i]=parseInt(h.substr(i*2,2),16);
+      return a;
+    }
+    async function sha256hex(str){
+      const b = await crypto.subtle.digest('SHA-256', enc.encode(str));
+      return buf2hex(b);
+    }
+    async function deriveKey(pwd, salt){
+      const base = await crypto.subtle.importKey(
+        'raw', enc.encode(pwd), 'PBKDF2', false, ['deriveKey']
+      );
+      return crypto.subtle.deriveKey(
+        { name:'PBKDF2', salt, iterations:600000, hash:'SHA-256' },
+        base, { name:'AES-GCM', length:256 }, false, ['encrypt','decrypt']
+      );
+    }
+    async function encryptPAT(pat, pwd){
+      const salt = crypto.getRandomValues(new Uint8Array(16));
+      const iv   = crypto.getRandomValues(new Uint8Array(12));
+      const key  = await deriveKey(pwd, salt);
+      const ct   = await crypto.subtle.encrypt({name:'AES-GCM', iv}, key, enc.encode(pat));
+      return { salt:buf2hex(salt), iv:buf2hex(iv), ct:buf2hex(ct) };
+    }
+    async function decryptPAT(blob, pwd){
+      const salt = hex2buf(blob.salt);
+      const iv   = hex2buf(blob.iv);
+      const key  = await deriveKey(pwd, salt);
+      const pt   = await crypto.subtle.decrypt({name:'AES-GCM', iv}, key, hex2buf(blob.ct));
+      return dec.decode(pt);
+    }
+
+    // ========== STATE ==========
+    let session = { pat:null, pwd:null };
+
+    // ========== LOCK FORM ==========
+    document.getElementById('form-lock').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const errEl = document.getElementById('lock-err');
+      errEl.textContent = '';
+      const pwd = document.getElementById('pwd').value;
+      const hash = await sha256hex(pwd);
+      if(hash !== PWD_HASH){
+        errEl.textContent = 'Contraseña incorrecta.';
+        return;
+      }
+      session.pwd = pwd;
+      // 1) Try localStorage first (last setup wins, e.g. token rotation by user)
+      const stored = localStorage.getItem('lads_pat_enc');
+      if(stored){
+        try{
+          session.pat = await decryptPAT(JSON.parse(stored), pwd);
+          await enterMain();
+          return;
+        }catch(_){
+          localStorage.removeItem('lads_pat_enc');
+        }
+      }
+      // 2) Try embedded blob (pre-loaded by Claude — zero setup path)
+      if(EMBEDDED_PAT_BLOB && EMBEDDED_PAT_BLOB.ct){
+        try{
+          session.pat = await decryptPAT(EMBEDDED_PAT_BLOB, pwd);
+          await enterMain();
+          return;
+        }catch(_){ /* fall through to manual setup */ }
+      }
+      // 3) Manual PAT setup
+      show('setup');
+    });
+
+    // ========== SETUP FORM ==========
+    document.getElementById('form-setup').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const errEl = document.getElementById('setup-err');
+      errEl.textContent = '';
+      const pat = document.getElementById('pat').value.trim();
+      if(!/^github_pat_/.test(pat) && !/^ghp_/.test(pat)){
+        errEl.textContent = 'El token debería empezar con "github_pat_" (fine-grained) o "ghp_" (classic).';
+        return;
+      }
+      // Test the token
+      try{
+        const r = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}`, {
+          headers:{ Authorization:`Bearer ${pat}`, Accept:'application/vnd.github+json' }
+        });
+        if(!r.ok){
+          errEl.textContent = `GitHub rechazó el token (${r.status}). Verificá permisos (Contents: Read & write) y repo seleccionado.`;
+          return;
+        }
+      }catch(_){
+        errEl.textContent = 'No se pudo conectar con GitHub.';
+        return;
+      }
+      const blob = await encryptPAT(pat, session.pwd);
+      localStorage.setItem('lads_pat_enc', JSON.stringify(blob));
+      session.pat = pat;
+      await enterMain();
+    });
+
+    // ========== LOGOUT ==========
+    document.getElementById('link-logout').addEventListener('click', (e) => {
+      e.preventDefault();
+      session = { pat:null, pwd:null };
+      document.getElementById('pwd').value = '';
+      document.getElementById('grid').innerHTML = '';
+      show('lock');
+    });
+
+    // ========== ENTER MAIN ==========
+    async function enterMain(){
+      show('main');
+      document.getElementById('branch-info').textContent = `repo: ${REPO_OWNER}/${REPO_NAME} · rama: ${BRANCH}`;
+      await loadProducts();
+    }
+
+    // ========== LOAD PRODUCTS FROM index.html ==========
+    async function loadProducts(){
+      const grid = document.getElementById('grid');
+      grid.innerHTML = '<p class="meta" style="grid-column:1/-1; color:var(--muted); padding:30px; text-align:center;">Cargando catálogo...</p>';
+      try{
+        const r = await fetch('index.html?_=' + Date.now());
+        const html = await r.text();
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        const imgs = doc.querySelectorAll('.pcard__media img[data-slug]');
+        const products = [...imgs].map(img => {
+          const card = img.closest('.pcard');
+          const name = card?.querySelector('.pcard__body h3')?.textContent?.trim() || img.alt;
+          return { slug: img.dataset.slug, name, alt: img.alt };
+        });
+        renderProducts(products);
+      }catch(err){
+        grid.innerHTML = '<p class="err-msg" style="grid-column:1/-1;">No se pudo leer index.html: '+err.message+'</p>';
+      }
+    }
+
+    function renderProducts(products){
+      const grid = document.getElementById('grid');
+      grid.innerHTML = '';
+      products.forEach(p => {
+        const it = document.createElement('div');
+        it.className = 'item';
+        it.dataset.slug = p.slug;
+        it.innerHTML = `
+          <div class="item__preview">
+            <img src="assets/products/${p.slug}.webp?t=${Date.now()}" alt="${p.alt}"
+                 onerror="this.onerror=null;this.src='assets/products/${p.slug}.svg'"/>
+          </div>
+          <div class="item__body">
+            <h3 class="item__name">${p.name}</h3>
+            <p class="item__slug">${p.slug}</p>
+            <div class="item__actions">
+              <label>
+                Subir nueva
+                <input type="file" accept="image/*" />
+              </label>
+            </div>
+          </div>
+        `;
+        // Detect if webp exists -> badge "WebP"; else SVG fallback badge.
+        fetch(`assets/products/${p.slug}.webp`, {method:'HEAD'}).then(r => {
+          const preview = it.querySelector('.item__preview');
+          const badge = document.createElement('span');
+          badge.className = 'badge' + (r.ok ? '' : ' badge--svg');
+          badge.textContent = r.ok ? 'WebP' : 'SVG';
+          preview.appendChild(badge);
+        }).catch(()=>{});
+
+        it.querySelector('input[type=file]').addEventListener('change', (e) => {
+          const file = e.target.files[0];
+          if(file) uploadImage(p.slug, file, it);
+          e.target.value = '';
+        });
+        grid.appendChild(it);
+      });
+    }
+
+    // ========== IMAGE PROCESSING + UPLOAD ==========
+    async function resizeToWebp(file, maxDim=1000, quality=0.88){
+      const bmp = await createImageBitmap(file);
+      let { width, height } = bmp;
+      if(Math.max(width,height) > maxDim){
+        const scale = maxDim / Math.max(width,height);
+        width  = Math.round(width  * scale);
+        height = Math.round(height * scale);
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = width; canvas.height = height;
+      const ctx = canvas.getContext('2d');
+      ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(bmp, 0, 0, width, height);
+      bmp.close?.();
+      return new Promise((resolve, reject) => {
+        canvas.toBlob(b => b ? resolve(b) : reject(new Error('Falló la conversión a WebP')), 'image/webp', quality);
+      });
+    }
+
+    async function blobToBase64(blob){
+      return new Promise((resolve, reject) => {
+        const r = new FileReader();
+        r.onload = () => {
+          const s = r.result;
+          resolve(s.substring(s.indexOf(',')+1));
+        };
+        r.onerror = () => reject(r.error);
+        r.readAsDataURL(blob);
+      });
+    }
+
+    async function ghGetSha(path){
+      const r = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}?ref=${BRANCH}`, {
+        headers:{ Authorization:`Bearer ${session.pat}`, Accept:'application/vnd.github+json' }
+      });
+      if(r.status === 404) return null;
+      if(!r.ok) throw new Error('GitHub GET '+r.status);
+      const j = await r.json();
+      return j.sha;
+    }
+
+    async function ghPutFile(path, base64, message){
+      const sha = await ghGetSha(path);
+      const body = {
+        message,
+        content: base64,
+        branch: BRANCH,
+      };
+      if(sha) body.sha = sha;
+      const r = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`, {
+        method:'PUT',
+        headers:{
+          Authorization:`Bearer ${session.pat}`,
+          Accept:'application/vnd.github+json',
+          'Content-Type':'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+      if(!r.ok){
+        const t = await r.text();
+        throw new Error('GitHub PUT '+r.status+': '+t.substring(0,200));
+      }
+      return r.json();
+    }
+
+    async function uploadImage(slug, file, itemEl){
+      itemEl.classList.add('is-uploading');
+      try{
+        const blob = await resizeToWebp(file);
+        const b64  = await blobToBase64(blob);
+        const path = `assets/products/${slug}.webp`;
+        await ghPutFile(path, b64, `admin: actualiza imagen ${slug}`);
+        toast(`✓ ${slug} actualizado (${(blob.size/1024).toFixed(0)} KB) · GitHub Pages tarda ~1 min en publicar`, 'ok');
+        // Refresh preview
+        const imgEl = itemEl.querySelector('.item__preview img');
+        imgEl.onerror = null;
+        imgEl.src = `assets/products/${slug}.webp?t=${Date.now()}`;
+        const oldBadge = itemEl.querySelector('.badge');
+        if(oldBadge) oldBadge.remove();
+        const badge = document.createElement('span');
+        badge.className = 'badge';
+        badge.textContent = 'WebP';
+        itemEl.querySelector('.item__preview').appendChild(badge);
+      }catch(err){
+        toast('Error: ' + err.message, 'err');
+        console.error(err);
+      }finally{
+        itemEl.classList.remove('is-uploading');
+      }
+    }
+  })();
+  </script>
+</body>
+</html>
