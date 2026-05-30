@@ -246,6 +246,14 @@
     //   crypto.subtle.digest('SHA-256', new TextEncoder().encode('TU_NUEVA_PASS'))
     //     .then(b => console.log([...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')))
     const PWD_HASH = '58ed672393e2504430ee1548941a955e73fb02e45f0bbd2f697785aae3edb600';
+    // PAT pre-cargado, encriptado con la contraseña (AES-GCM + PBKDF2 SHA-256 / 600k iter).
+    // Sin la contraseña correcta es indescifrable. Para regenerar: rotá el token en GitHub y
+    // pedile a Claude que recompute este blob con tu nueva contraseña.
+    const EMBEDDED_PAT_BLOB = {
+      salt: "6de3f0d2982fa23bedf656bdcb87e499",
+      iv:   "bfb097fe372ef31ed0fa1f4a",
+      ct:   "fa60522b9ac29e699a97bf9ccbfc9c5f7d5fb47beb8ad6b960f21330cfeab6af2618640e956d9fe7390a96ff383bdefc0a42237da7f34109abf9ec2445ff104b4108976d9789ec6281d1de1263c7518f7932733b8fcc964a4abf03e0d8e33ad5dea4f75809ac21546d3355e6ac"
+    };
 
     // ========== STAGE ROUTER ==========
     const stages = {
@@ -286,7 +294,7 @@
         'raw', enc.encode(pwd), 'PBKDF2', false, ['deriveKey']
       );
       return crypto.subtle.deriveKey(
-        { name:'PBKDF2', salt, iterations:120000, hash:'SHA-256' },
+        { name:'PBKDF2', salt, iterations:600000, hash:'SHA-256' },
         base, { name:'AES-GCM', length:256 }, false, ['encrypt','decrypt']
       );
     }
@@ -320,19 +328,27 @@
         return;
       }
       session.pwd = pwd;
+      // 1) Try localStorage first (last setup wins, e.g. token rotation by user)
       const stored = localStorage.getItem('lads_pat_enc');
-      if(!stored){
-        show('setup');
-        return;
+      if(stored){
+        try{
+          session.pat = await decryptPAT(JSON.parse(stored), pwd);
+          await enterMain();
+          return;
+        }catch(_){
+          localStorage.removeItem('lads_pat_enc');
+        }
       }
-      try{
-        session.pat = await decryptPAT(JSON.parse(stored), pwd);
-        await enterMain();
-      }catch(_){
-        errEl.textContent = 'No se pudo desencriptar el token. Si cambiaste la contraseña, configurá el token de nuevo.';
-        localStorage.removeItem('lads_pat_enc');
-        setTimeout(()=> show('setup'), 1500);
+      // 2) Try embedded blob (pre-loaded by Claude — zero setup path)
+      if(EMBEDDED_PAT_BLOB && EMBEDDED_PAT_BLOB.ct){
+        try{
+          session.pat = await decryptPAT(EMBEDDED_PAT_BLOB, pwd);
+          await enterMain();
+          return;
+        }catch(_){ /* fall through to manual setup */ }
       }
+      // 3) Manual PAT setup
+      show('setup');
     });
 
     // ========== SETUP FORM ==========
