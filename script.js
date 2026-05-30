@@ -62,4 +62,21 @@
       });
     });
   }
+
+  // === Entrada discreta al panel admin: triple-click en el copyright del footer ===
+  const yearSmall = year?.closest('small');
+  if (yearSmall) {
+    let clicks = 0, timer;
+    yearSmall.style.cursor = 'default';
+    yearSmall.addEventListener('click', () => {
+      clicks++;
+      clearTimeout(timer);
+      if (clicks >= 3) {
+        clicks = 0;
+        window.location.href = 'admin.html';
+        return;
+      }
+      timer = setTimeout(() => { clicks = 0; }, 600);
+    });
+  }
 })();
