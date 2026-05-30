@@ -28,4 +28,33 @@
   };
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+
+  // === Catálogo: filtros por categoría ===
+  const filters = document.querySelectorAll('.filter');
+  const grid = document.getElementById('catalogGrid');
+  const empty = document.getElementById('catalogEmpty');
+
+  if (filters.length && grid) {
+    const cards = Array.from(grid.querySelectorAll('.pcard'));
+
+    filters.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.filter;
+
+        filters.forEach((f) => {
+          f.classList.toggle('is-active', f === btn);
+          f.setAttribute('aria-selected', f === btn ? 'true' : 'false');
+        });
+
+        let visible = 0;
+        cards.forEach((card) => {
+          const match = target === 'all' || card.dataset.cat === target;
+          card.hidden = !match;
+          if (match) visible++;
+        });
+
+        if (empty) empty.hidden = visible > 0;
+      });
+    });
+  }
 })();
