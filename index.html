@@ -3,28 +3,97 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Los Ángeles Detailing Store CR — Detailing Automotriz Premium en Costa Rica</title>
+  <title>Los Ángeles Detailing Store (CR) — Professional Auto Care</title>
   <meta name="description" content="Tienda especializada en detailing automotriz premium en Costa Rica. Productos profesionales para acabado tipo show car: ceras, selladores, recubrimientos cerámicos, descontaminantes y más." />
-  <meta name="theme-color" content="#0b0b0d" />
-  <meta property="og:title" content="Los Ángeles Detailing Store CR" />
+  <meta name="theme-color" content="#0D1B2A" />
+  <meta property="og:title" content="Los Ángeles Detailing Store (CR)" />
   <meta property="og:description" content="Productos premium para el cuidado, protección y embellecimiento de tu vehículo. Acabado show car, máximo brillo y protección avanzada." />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="es_CR" />
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500;600;700;800;900&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <a class="skip-link" href="#main">Saltar al contenido</a>
 
+  <!-- Icon sprite -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+    <symbol id="i-car" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 38 L14 24 Q15 21 18 21 L46 21 Q49 21 50 24 L54 38"/>
+      <rect x="8" y="38" width="48" height="10" rx="3"/>
+      <circle cx="18" cy="48" r="4"/>
+      <circle cx="46" cy="48" r="4"/>
+      <path d="M44 14 l3 -3 M50 18 l4 -2 M52 24 l5 0" opacity="0.7"/>
+    </symbol>
+    <symbol id="i-shield" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M32 6 L52 14 L52 32 Q52 48 32 58 Q12 48 12 32 L12 14 Z"/>
+      <path d="M24 32 l6 6 l12 -14"/>
+    </symbol>
+    <symbol id="i-drop" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M32 6 C20 22 14 32 14 40 a18 18 0 0 0 36 0 c0 -8 -6 -18 -18 -34z"/>
+      <path d="M22 42 q4 6 10 4" opacity="0.7"/>
+    </symbol>
+    <symbol id="i-diamond" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M16 24 L32 8 L48 24 L32 56 Z"/>
+      <path d="M16 24 L48 24 M24 24 L32 8 M40 24 L32 8 M24 24 L32 56 M40 24 L32 56"/>
+    </symbol>
+    <symbol id="i-polisher" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="14" y="18" width="22" height="14" rx="2"/>
+      <path d="M36 22 L52 22 L52 28 L36 28"/>
+      <circle cx="25" cy="44" r="10"/>
+      <circle cx="25" cy="44" r="4"/>
+      <path d="M48 14 l4 -4 M52 22 l6 0 M48 32 l4 4" opacity="0.7"/>
+    </symbol>
+    <symbol id="i-spray" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 22 L22 56 L42 56 L42 22 Z"/>
+      <path d="M26 22 L26 14 L38 14 L38 22"/>
+      <path d="M38 18 L46 18 L46 12"/>
+      <path d="M52 8 l3 -3 M54 14 l5 0 M50 6 l1 -4" opacity="0.7"/>
+      <path d="M26 32 L38 32"/>
+    </symbol>
+    <symbol id="i-foam" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="20" cy="36" r="8"/>
+      <circle cx="32" cy="28" r="9"/>
+      <circle cx="44" cy="36" r="8"/>
+      <circle cx="32" cy="44" r="6"/>
+      <path d="M14 50 L50 50"/>
+    </symbol>
+    <symbol id="i-wheel" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="32" cy="32" r="22"/>
+      <circle cx="32" cy="32" r="6"/>
+      <path d="M32 10 L32 26 M32 38 L32 54 M10 32 L26 32 M38 32 L54 32 M16 16 L27 27 M37 37 L48 48 M48 16 L37 27 M27 37 L16 48"/>
+    </symbol>
+    <symbol id="i-seat" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 10 Q18 6 22 6 L34 6 Q38 6 38 10 L38 34 L18 34 Z"/>
+      <path d="M14 34 L42 34 Q46 34 46 38 L46 52 Q46 56 42 56 L18 56 Q14 56 14 52 Z"/>
+      <path d="M46 38 L54 42 L54 54"/>
+    </symbol>
+    <symbol id="i-engine" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 28 L14 46 Q14 50 18 50 L40 50 Q44 50 44 46 L44 40 L52 40 L52 30 L44 30 L44 24 Q44 20 40 20 L26 20 L22 16 L18 16 L18 20"/>
+      <path d="M26 14 L34 14"/>
+    </symbol>
+    <symbol id="i-bike" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="14" cy="46" r="8"/>
+      <circle cx="50" cy="46" r="8"/>
+      <path d="M22 46 L34 30 L42 30 L48 42"/>
+      <path d="M28 30 L40 30 L36 22 L30 22"/>
+    </symbol>
+    <symbol id="i-wa" viewBox="0 0 32 32" fill="currentColor">
+      <path d="M19.11 17.205c-.372 0-1.088 1.39-1.518 1.39a.63.63 0 0 1-.315-.1c-.802-.402-1.504-.817-2.163-1.447-.545-.516-1.146-1.29-1.46-1.963a.426.426 0 0 1-.073-.215c0-.33.99-.945.99-1.49 0-.143-.73-2.09-.832-2.335-.143-.372-.214-.487-.6-.487-.187 0-.36-.043-.53-.043-.302 0-.53.115-.746.315-.688.645-1.032 1.318-1.045 2.247v.13c-.014.99.472 1.977 1.017 2.78 1.39 2.035 2.92 3.71 5.18 4.728.708.317 2.504 1.087 3.27 1.087.387 0 .684-.085.992-.215.486-.215 1.16-.93 1.376-1.418.043-.116.043-.215.043-.331 0-.087-.014-.143-.027-.215-.105-.218-.105-.218-.488-.43z"/>
+      <path d="M16.11 0C7.213 0 .052 7.16.052 16.058a16.04 16.04 0 0 0 2.43 8.486L0 32l7.74-2.43A16.046 16.046 0 0 0 32 16.058C32 7.16 24.84 0 16.11 0zm0 28.9c-2.62 0-5.184-.78-7.354-2.207L7.927 26.2l-4.6 1.444 1.476-4.49-.5-.81a13.16 13.16 0 0 1-2.05-7.067c0-7.282 5.92-13.202 13.202-13.202 7.282 0 13.202 5.92 13.202 13.202S23.39 28.9 16.11 28.9z"/>
+    </symbol>
+  </svg>
+
   <header class="nav" id="nav">
     <div class="container nav__inner">
-      <a href="#top" class="brand" aria-label="Los Ángeles Detailing Store — Inicio">
-        <span class="brand__mark">LA</span>
+      <a href="#top" class="brand" aria-label="Los Ángeles Detailing Store CR — Inicio">
+        <img src="assets/logo.svg" alt="" class="brand__logo" width="44" height="48" />
         <span class="brand__text">
-          <strong>Los Ángeles</strong>
-          <small>Detailing Store · CR</small>
+          <strong>LOS ÁNGELES</strong>
+          <em>DETAILING STORE <span>(CR)</span></em>
         </span>
       </a>
 
@@ -47,27 +116,34 @@
     <section class="hero" id="top">
       <div class="hero__bg" aria-hidden="true"></div>
       <div class="container hero__inner">
-        <p class="eyebrow">Detailing Automotriz Premium · Costa Rica</p>
-        <h1 class="hero__title">
-          Acabado <span class="grad">show car</span>,<br />
-          protección de nivel profesional.
-        </h1>
-        <p class="hero__lead">
-          Productos seleccionados para entusiastas y detailers que buscan máximo brillo,
-          profundidad de color y durabilidad real. Tecnología de cuidado automotriz
-          al alcance de tu garaje en Costa Rica.
-        </p>
-        <div class="hero__cta">
-          <a href="https://wa.me/50685638296?text=Hola%20LADS%2C%20me%20interesa%20conocer%20los%20productos" class="btn btn--primary" target="_blank" rel="noopener">
-            Pedí por WhatsApp
-          </a>
-          <a href="#categorias" class="btn btn--ghost">Ver categorías</a>
+        <div class="hero__copy">
+          <p class="eyebrow">Professional Auto Care · Costa Rica</p>
+          <h1 class="hero__title">
+            ACABADO <span class="accent">SHOW CAR</span>,<br />
+            PROTECCIÓN <span class="accent-blue">PROFESIONAL</span>.
+          </h1>
+          <p class="hero__lead">
+            Productos seleccionados para entusiastas y detailers que buscan máximo brillo,
+            profundidad de color y durabilidad real. Tecnología de cuidado automotriz
+            al alcance de tu garaje en Costa Rica.
+          </p>
+          <div class="hero__cta">
+            <a href="https://wa.me/50685638296?text=Hola%20LADS%2C%20me%20interesa%20conocer%20los%20productos" class="btn btn--primary" target="_blank" rel="noopener">
+              <svg class="ico ico--sm"><use href="#i-wa"/></svg>
+              Pedí por WhatsApp
+            </a>
+            <a href="#categorias" class="btn btn--ghost">Ver categorías</a>
+          </div>
+          <ul class="hero__chips">
+            <li>Envíos a todo CR</li>
+            <li>Marcas profesionales</li>
+            <li>Asesoría técnica</li>
+          </ul>
         </div>
-        <ul class="hero__chips">
-          <li>Envíos a todo CR</li>
-          <li>Marcas profesionales</li>
-          <li>Asesoría técnica</li>
-        </ul>
+        <div class="hero__art" aria-hidden="true">
+          <img src="assets/logo.svg" alt="" class="hero__logo" />
+          <div class="hero__glow"></div>
+        </div>
       </div>
     </section>
 
@@ -75,28 +151,33 @@
       <div class="container">
         <header class="section-head">
           <p class="eyebrow">¿Por qué LADS?</p>
-          <h2>La diferencia entre lavar y <em>detallar</em>.</h2>
+          <h2>LA DIFERENCIA ENTRE <span class="accent">LAVAR</span> Y <span class="accent-blue">DETALLAR</span>.</h2>
           <p class="section-lead">
             No vendemos productos genéricos. Curamos un catálogo enfocado en resultados
             profesionales, con respaldo técnico para que aciertes en cada compra.
           </p>
         </header>
 
-        <div class="grid grid--3">
+        <div class="grid grid--4">
           <article class="card">
-            <div class="card__icon" aria-hidden="true">✦</div>
-            <h3>Calidad premium</h3>
-            <p>Líneas profesionales reconocidas mundialmente por su rendimiento, formulación y resultados consistentes.</p>
+            <div class="card__icon"><svg class="ico"><use href="#i-car"/></svg></div>
+            <h3>Acabados de exhibición</h3>
+            <p>Resultados tipo show car, con brillo profundo y reflejos que enamoran.</p>
           </article>
           <article class="card">
-            <div class="card__icon" aria-hidden="true">◈</div>
+            <div class="card__icon"><svg class="ico"><use href="#i-shield"/></svg></div>
             <h3>Protección avanzada</h3>
-            <p>Selladores sintéticos, recubrimientos cerámicos y ceras híbridas con durabilidad real, no promesas.</p>
+            <p>Selladores sintéticos, recubrimientos cerámicos y ceras híbridas con durabilidad real.</p>
           </article>
           <article class="card">
-            <div class="card__icon" aria-hidden="true">⌘</div>
-            <h3>Asesoría experta</h3>
-            <p>Te ayudamos a elegir según tu tipo de pintura, condiciones y nivel de acabado que querés lograr.</p>
+            <div class="card__icon"><svg class="ico"><use href="#i-drop"/></svg></div>
+            <h3>Efecto hidrofóbico</h3>
+            <p>El agua resbala, el polvo se va. Mantenimiento más fácil entre lavados.</p>
+          </article>
+          <article class="card">
+            <div class="card__icon"><svg class="ico"><use href="#i-diamond"/></svg></div>
+            <h3>Brillo extremo</h3>
+            <p>Profundidad de color, claridad y reflejos espejo en pinturas claras y oscuras.</p>
           </article>
         </div>
       </div>
@@ -106,43 +187,43 @@
       <div class="container">
         <header class="section-head">
           <p class="eyebrow">Catálogo</p>
-          <h2>Categorías destacadas</h2>
+          <h2>CATEGORÍAS <span class="accent">DESTACADAS</span></h2>
           <p class="section-lead">Todo lo que necesitás para un proceso de detailing completo, de la prep al sellado final.</p>
         </header>
 
         <div class="grid grid--3 cats">
-          <a href="#contacto" class="cat">
-            <div class="cat__art" data-cat="lavado" aria-hidden="true"></div>
+          <a href="https://wa.me/50685638296?text=Hola%2C%20info%20de%20Lavado%20y%20Descontaminaci%C3%B3n" class="cat" target="_blank" rel="noopener">
+            <div class="cat__icon"><svg class="ico ico--lg"><use href="#i-foam"/></svg></div>
             <h3>Lavado &amp; Descontaminación</h3>
             <p>Shampoos pH neutro, snow foam, arcillas, removedores de hierro y bug remover.</p>
             <span class="cat__cta">Consultar →</span>
           </a>
-          <a href="#contacto" class="cat">
-            <div class="cat__art" data-cat="pulido" aria-hidden="true"></div>
+          <a href="https://wa.me/50685638296?text=Hola%2C%20info%20de%20Pulido%20y%20Correcci%C3%B3n" class="cat" target="_blank" rel="noopener">
+            <div class="cat__icon"><svg class="ico ico--lg"><use href="#i-polisher"/></svg></div>
             <h3>Pulido &amp; Corrección</h3>
             <p>Compuestos de corte, pulidores finos, pads y microfibras de corte profesional.</p>
             <span class="cat__cta">Consultar →</span>
           </a>
-          <a href="#contacto" class="cat">
-            <div class="cat__art" data-cat="proteccion" aria-hidden="true"></div>
+          <a href="https://wa.me/50685638296?text=Hola%2C%20info%20de%20Protecci%C3%B3n%20y%20Sellado" class="cat" target="_blank" rel="noopener">
+            <div class="cat__icon"><svg class="ico ico--lg"><use href="#i-shield"/></svg></div>
             <h3>Protección &amp; Sellado</h3>
             <p>Ceras carnauba, selladores sintéticos, recubrimientos cerámicos y spray sealants.</p>
             <span class="cat__cta">Consultar →</span>
           </a>
-          <a href="#contacto" class="cat">
-            <div class="cat__art" data-cat="interior" aria-hidden="true"></div>
+          <a href="https://wa.me/50685638296?text=Hola%2C%20info%20de%20Interior%20y%20Tapicer%C3%ADa" class="cat" target="_blank" rel="noopener">
+            <div class="cat__icon"><svg class="ico ico--lg"><use href="#i-seat"/></svg></div>
             <h3>Interior &amp; Tapicería</h3>
             <p>Limpia interiores APC, acondicionadores de cuero, limpiadores de vidrio y odorizantes.</p>
             <span class="cat__cta">Consultar →</span>
           </a>
-          <a href="#contacto" class="cat">
-            <div class="cat__art" data-cat="llantas" aria-hidden="true"></div>
+          <a href="https://wa.me/50685638296?text=Hola%2C%20info%20de%20Llantas%20y%20Aros" class="cat" target="_blank" rel="noopener">
+            <div class="cat__icon"><svg class="ico ico--lg"><use href="#i-wheel"/></svg></div>
             <h3>Llantas &amp; Aros</h3>
             <p>Limpiadores libres de ácido, dressings de llanta y selladores para aros.</p>
             <span class="cat__cta">Consultar →</span>
           </a>
-          <a href="#contacto" class="cat">
-            <div class="cat__art" data-cat="accesorios" aria-hidden="true"></div>
+          <a href="https://wa.me/50685638296?text=Hola%2C%20info%20de%20Accesorios" class="cat" target="_blank" rel="noopener">
+            <div class="cat__icon"><svg class="ico ico--lg"><use href="#i-spray"/></svg></div>
             <h3>Accesorios &amp; Aplicación</h3>
             <p>Microfibras, aplicadores, baldes, guantes, mitts y herramientas profesionales.</p>
             <span class="cat__cta">Consultar →</span>
@@ -151,17 +232,32 @@
       </div>
     </section>
 
+    <section class="servicios">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Iconos por servicio</p>
+          <h2>SOLUCIONES PARA <span class="accent-blue">CADA VEHÍCULO</span></h2>
+        </header>
+        <div class="grid grid--4 service-grid">
+          <div class="service"><div class="service__ring"><svg class="ico ico--lg"><use href="#i-car"/></svg></div><h4>Exterior</h4></div>
+          <div class="service"><div class="service__ring"><svg class="ico ico--lg"><use href="#i-seat"/></svg></div><h4>Interior</h4></div>
+          <div class="service"><div class="service__ring"><svg class="ico ico--lg"><use href="#i-engine"/></svg></div><h4>Motor</h4></div>
+          <div class="service"><div class="service__ring"><svg class="ico ico--lg"><use href="#i-bike"/></svg></div><h4>Motos</h4></div>
+        </div>
+      </div>
+    </section>
+
     <section class="productos" id="productos">
       <div class="container">
         <header class="section-head">
           <p class="eyebrow">Top picks</p>
-          <h2>Productos destacados</h2>
+          <h2>PRODUCTOS <span class="accent">DESTACADOS</span></h2>
           <p class="section-lead">Una selección curada de los favoritos del taller. Hacé tu pedido por WhatsApp.</p>
         </header>
 
         <div class="grid grid--3 products">
           <article class="product">
-            <div class="product__img" data-p="ceramic" aria-hidden="true"></div>
+            <div class="product__img"><svg class="ico ico--xl"><use href="#i-shield"/></svg></div>
             <div class="product__body">
               <p class="product__tag">Protección</p>
               <h3>Recubrimiento Cerámico 9H</h3>
@@ -170,7 +266,7 @@
             </div>
           </article>
           <article class="product">
-            <div class="product__img" data-p="wax" aria-hidden="true"></div>
+            <div class="product__img"><svg class="ico ico--xl"><use href="#i-diamond"/></svg></div>
             <div class="product__body">
               <p class="product__tag">Brillo</p>
               <h3>Cera de Carnauba Premium</h3>
@@ -179,7 +275,7 @@
             </div>
           </article>
           <article class="product">
-            <div class="product__img" data-p="foam" aria-hidden="true"></div>
+            <div class="product__img"><svg class="ico ico--xl"><use href="#i-foam"/></svg></div>
             <div class="product__body">
               <p class="product__tag">Lavado</p>
               <h3>Snow Foam pH Neutro</h3>
@@ -195,7 +291,7 @@
       <div class="container">
         <header class="section-head">
           <p class="eyebrow">Tu proceso de detailing</p>
-          <h2>De sucio a show car, paso a paso.</h2>
+          <h2>DE SUCIO A <span class="accent">SHOW CAR</span>, PASO A PASO.</h2>
         </header>
         <ol class="steps">
           <li><span>01</span><h3>Pre-lavado</h3><p>Snow foam + enjuague para retirar contaminantes sueltos sin tocar la pintura.</p></li>
@@ -210,12 +306,14 @@
 
     <section class="nosotros" id="nosotros">
       <div class="container nosotros__grid">
-        <div class="nosotros__art" aria-hidden="true"></div>
+        <div class="nosotros__art" aria-hidden="true">
+          <img src="assets/logo.svg" alt="" />
+        </div>
         <div>
           <p class="eyebrow">Sobre nosotros</p>
-          <h2>Pasión por el detalle, hecha tienda.</h2>
+          <h2>PASIÓN POR EL DETALLE, <span class="accent">HECHA TIENDA</span>.</h2>
           <p>
-            <strong>Los Ángeles Detailing Store</strong> nace en Costa Rica con un objetivo claro:
+            <strong>Los Ángeles Detailing Store (CR)</strong> nace en Costa Rica con un objetivo claro:
             acercar al entusiasta y al profesional del detailing los productos, marcas y técnicas
             que normalmente solo se encuentran fuera del país.
           </p>
@@ -237,8 +335,8 @@
       <div class="container contacto__inner">
         <div>
           <p class="eyebrow">Hablemos</p>
-          <h2>Pedí, consultá o asesorate.</h2>
-          <p>
+          <h2>PEDÍ, CONSULTÁ O <span class="accent-blue">ASESORATE</span>.</h2>
+          <p class="contacto__lead">
             Atendemos tus pedidos y consultas técnicas directamente por WhatsApp e Instagram.
             Contanos qué auto tenés y qué resultado querés lograr — te ayudamos a armar el combo ideal.
           </p>
@@ -262,10 +360,12 @@
         <a href="https://wa.me/50685638296?text=Hola%20LADS%2C%20quiero%20hacer%20un%20pedido" class="cta-card" target="_blank" rel="noopener">
           <div>
             <p class="eyebrow eyebrow--light">Canal directo</p>
-            <h3>Escribinos por WhatsApp</h3>
+            <h3>ESCRIBINOS POR WHATSAPP</h3>
             <p>Respuesta rápida en horario laboral. Coordinamos pedido, pago y envío en minutos.</p>
           </div>
-          <span class="cta-card__arrow" aria-hidden="true">→</span>
+          <span class="cta-card__arrow" aria-hidden="true">
+            <svg class="ico ico--lg"><use href="#i-wa"/></svg>
+          </span>
         </a>
       </div>
     </section>
@@ -275,13 +375,13 @@
     <div class="container footer__inner">
       <div>
         <a href="#top" class="brand brand--footer">
-          <span class="brand__mark">LA</span>
+          <img src="assets/logo.svg" alt="" class="brand__logo" width="40" height="44" />
           <span class="brand__text">
-            <strong>Los Ángeles</strong>
-            <small>Detailing Store · CR</small>
+            <strong>LOS ÁNGELES</strong>
+            <em>DETAILING STORE <span>(CR)</span></em>
           </span>
         </a>
-        <p class="footer__tag">Detailing automotriz premium en Costa Rica.</p>
+        <p class="footer__tag">Professional Auto Care · Detailing automotriz premium en Costa Rica.</p>
       </div>
 
       <nav aria-label="Footer">
@@ -298,15 +398,12 @@
       </nav>
     </div>
     <div class="container footer__base">
-      <small>© <span id="year"></span> Los Ángeles Detailing Store CR. Todos los derechos reservados.</small>
+      <small>© <span id="year"></span> Los Ángeles Detailing Store (CR). Todos los derechos reservados.</small>
     </div>
   </footer>
 
   <a href="https://wa.me/50685638296?text=Hola%20LADS" class="wa-float" target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp">
-    <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true">
-      <path fill="currentColor" d="M19.11 17.205c-.372 0-1.088 1.39-1.518 1.39a.63.63 0 0 1-.315-.1c-.802-.402-1.504-.817-2.163-1.447-.545-.516-1.146-1.29-1.46-1.963a.426.426 0 0 1-.073-.215c0-.33.99-.945.99-1.49 0-.143-.73-2.09-.832-2.335-.143-.372-.214-.487-.6-.487-.187 0-.36-.043-.53-.043-.302 0-.53.115-.746.315-.688.645-1.032 1.318-1.045 2.247v.13c-.014.99.472 1.977 1.017 2.78 1.39 2.035 2.92 3.71 5.18 4.728.708.317 2.504 1.087 3.27 1.087.387 0 .684-.085.992-.215.486-.215 1.16-.93 1.376-1.418.043-.116.043-.215.043-.331 0-.087-.014-.143-.027-.215-.105-.218-.105-.218-.488-.43z"/>
-      <path fill="currentColor" d="M16.11 0C7.213 0 .052 7.16.052 16.058a16.04 16.04 0 0 0 2.43 8.486L0 32l7.74-2.43A16.046 16.046 0 0 0 32 16.058C32 7.16 24.84 0 16.11 0zm0 28.9c-2.62 0-5.184-.78-7.354-2.207L7.927 26.2l-4.6 1.444 1.476-4.49-.5-.81a13.16 13.16 0 0 1-2.05-7.067c0-7.282 5.92-13.202 13.202-13.202 7.282 0 13.202 5.92 13.202 13.202S23.39 28.9 16.11 28.9z"/>
-    </svg>
+    <svg class="ico"><use href="#i-wa"/></svg>
   </a>
 
   <script src="script.js" defer></script>
