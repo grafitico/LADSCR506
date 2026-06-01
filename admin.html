@@ -119,14 +119,20 @@
       font-size:11px; color:var(--muted); margin:0 0 12px;
       font-family:ui-monospace,monospace; letter-spacing:.3px;
     }
-    .item__actions{margin-top:auto; display:flex; gap:8px;}
-    .item__actions label{
-      flex:1; cursor:pointer; background:var(--blue);
-      color:#fff; border-radius:8px; padding:10px;
-      text-align:center; font-size:13px; font-weight:700;
+    .item__actions{margin-top:auto; display:flex; gap:6px; flex-wrap:wrap;}
+    .item__actions label, .item__actions button{
+      flex:1 1 0; min-width:0; cursor:pointer; border:0;
+      border-radius:8px; padding:9px 6px; text-align:center;
+      font-size:12px; font-weight:700; color:#fff;
+      font-family:inherit; transition:background .15s;
     }
+    .item__actions label{background:var(--blue);}
     .item__actions label:hover{background:#1976d2;}
     .item__actions input[type=file]{display:none;}
+    .item__actions .btn-edit{background:var(--surface); border:1px solid var(--line); color:var(--text);}
+    .item__actions .btn-edit:hover{background:var(--bg-2); border-color:var(--blue);}
+    .item__actions .btn-del{background:transparent; border:1px solid var(--err); color:var(--err);}
+    .item__actions .btn-del:hover{background:var(--err); color:#fff;}
     .item.is-uploading .item__preview::after{
       content:""; position:absolute; inset:0;
       background:rgba(13,27,42,.7); backdrop-filter:blur(2px);
@@ -578,8 +584,20 @@
         const imgs = doc.querySelectorAll('.pcard__media img[data-slug]');
         const products = [...imgs].map(img => {
           const card = img.closest('.pcard');
-          const name = card?.querySelector('.pcard__body h3')?.textContent?.trim() || img.alt;
-          return { slug: img.dataset.slug, name, alt: img.alt };
+          const bodyPs = card ? card.querySelectorAll('.pcard__body p') : [];
+          const stageEl = card?.querySelector('.pcard__stage');
+          return {
+            slug:     img.dataset.slug,
+            name:     card?.querySelector('.pcard__body h3')?.textContent?.trim() || img.alt,
+            alt:      img.alt,
+            cat:      card?.dataset.cat || '',
+            brand:    card?.dataset.brand || '',
+            featured: card?.classList.contains('pcard--featured') || false,
+            catText:  bodyPs[0]?.textContent?.trim() || '',
+            desc:     bodyPs[1]?.textContent?.trim() || '',
+            stage:    stageEl?.textContent?.trim() || '',
+            hotStage: stageEl?.classList.contains('pcard__stage--hot') || false,
+          };
         });
         existingSlugs.clear();
         products.forEach(p => existingSlugs.add(p.slug));
@@ -612,17 +630,19 @@
         it.dataset.slug = p.slug;
         it.innerHTML = `
           <div class="item__preview">
-            <img src="assets/products/${p.slug}.webp?t=${Date.now()}" alt="${p.alt}"
+            <img src="assets/products/${p.slug}.webp?t=${Date.now()}" alt="${escapeHtml(p.alt)}"
                  onerror="this.onerror=null;this.src='assets/products/${p.slug}.svg'"/>
           </div>
           <div class="item__body">
-            <h3 class="item__name">${p.name}</h3>
+            <h3 class="item__name">${escapeHtml(p.name)}</h3>
             <p class="item__slug">${p.slug}</p>
             <div class="item__actions">
-              <label>
-                Subir nueva
+              <label title="Reemplazar imagen">
+                Imagen
                 <input type="file" accept="image/*" />
               </label>
+              <button type="button" class="btn-edit" title="Editar producto">Editar</button>
+              <button type="button" class="btn-del" title="Borrar producto">Borrar</button>
             </div>
           </div>
         `;
@@ -640,6 +660,8 @@
           if(file) uploadImage(p.slug, file, it);
           e.target.value = '';
         });
+        it.querySelector('.btn-edit').addEventListener('click', () => openEditModal(p));
+        it.querySelector('.btn-del').addEventListener('click', () => deleteProduct(p, it));
         grid.appendChild(it);
       });
     }
@@ -736,13 +758,23 @@
       }
     }
 
-    // ========== ADD PRODUCT: MODAL ==========
+    // ========== PRODUCT MODAL (add / edit) ==========
     const modal = document.getElementById('modal-add');
     const formAdd = document.getElementById('form-add');
     const fName = document.getElementById('np-name');
     const fSlug = document.getElementById('np-slug');
     const fCat  = document.getElementById('np-cat');
     const fBrand= document.getElementById('np-brand');
+    const fCatText = document.getElementById('np-cattext');
+    const fDesc = document.getElementById('np-desc');
+    const fStage = document.getElementById('np-stage');
+    const fHot = document.getElementById('np-hot');
+    const fFeat = document.getElementById('np-featured');
+    const fImg = document.getElementById('np-img');
+    const modalTitle = document.getElementById('modal-add-title');
+    const btnSubmit = document.getElementById('btn-add-submit');
+    let modalMode = 'add';        // 'add' | 'edit'
+    let editingOrigSlug = null;
     let slugManuallyEdited = false;
 
     // Populate selects once
@@ -760,10 +792,40 @@
     function openAddModal(){
       formAdd.reset();
       document.getElementById('add-err').textContent = '';
+      modalMode = 'add';
+      editingOrigSlug = null;
       slugManuallyEdited = false;
+      modalTitle.textContent = 'Nuevo producto';
+      btnSubmit.textContent = 'Agregar producto';
+      fSlug.readOnly = false;
+      fImg.required = true;
       modal.hidden = false;
       setTimeout(() => fName.focus(), 50);
     }
+
+    function openEditModal(p){
+      formAdd.reset();
+      document.getElementById('add-err').textContent = '';
+      modalMode = 'edit';
+      editingOrigSlug = p.slug;
+      slugManuallyEdited = true; // don't override slug from name input
+      modalTitle.textContent = `Editar: ${p.name}`;
+      btnSubmit.textContent = 'Guardar cambios';
+      fName.value    = p.name;
+      fSlug.value    = p.slug;
+      fSlug.readOnly = true;       // slug locked (renaming = orphan image)
+      fCat.value     = p.cat;
+      fBrand.value   = p.brand;
+      fCatText.value = p.catText;
+      fDesc.value    = p.desc;
+      fStage.value   = p.stage;
+      fHot.checked   = p.hotStage;
+      fFeat.checked  = p.featured;
+      fImg.required  = false;      // optional in edit mode
+      modal.hidden = false;
+      setTimeout(() => fName.focus(), 50);
+    }
+
     function closeAddModal(){ modal.hidden = true; }
 
     modal.querySelectorAll('[data-close]').forEach(el => {
@@ -838,11 +900,48 @@
       return r.json();
     }
 
-    // ========== ADD PRODUCT: FORM SUBMIT ==========
+    // ========== FIND PCARD RANGE IN index.html ==========
+    function findPcardRange(content, slug){
+      const slugIdx = content.indexOf(`data-slug="${slug}"`);
+      if(slugIdx === -1) return null;
+      const artOpen = content.lastIndexOf('<article class="pcard', slugIdx);
+      if(artOpen === -1) return null;
+      // No second <article should open between artOpen and slugIdx
+      const between = content.indexOf('<article class="pcard', artOpen + 1);
+      if(between !== -1 && between < slugIdx) return null;
+      const closeIdx = content.indexOf('</article>', slugIdx);
+      if(closeIdx === -1) return null;
+      const lineStart = content.lastIndexOf('\n', artOpen) + 1;
+      let after = closeIdx + '</article>'.length;
+      if(content.substr(after, 2) === '\n\n') after += 2;
+      else if(content[after] === '\n') after += 1;
+      return { start: lineStart, end: after };
+    }
+
+    // ========== GITHUB DELETE FILE ==========
+    async function ghDeleteFile(path, message){
+      const sha = await ghGetSha(path);
+      if(!sha) return false; // already gone
+      const r = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`, {
+        method:'DELETE',
+        headers:{
+          Authorization:`Bearer ${session.pat}`,
+          Accept:'application/vnd.github+json',
+          'Content-Type':'application/json',
+        },
+        body: JSON.stringify({ message, sha, branch: BRANCH }),
+      });
+      if(!r.ok){
+        const t = await r.text();
+        throw new Error('GitHub DELETE '+path+' '+r.status+': '+t.substring(0,200));
+      }
+      return true;
+    }
+
+    // ========== ADD / EDIT: FORM SUBMIT ==========
     formAdd.addEventListener('submit', async (e) => {
       e.preventDefault();
       const errEl = document.getElementById('add-err');
-      const btn   = document.getElementById('btn-add-submit');
       errEl.textContent = '';
 
       const p = {
@@ -850,58 +949,104 @@
         slug:     fSlug.value.trim(),
         cat:      fCat.value,
         brand:    fBrand.value,
-        catText:  document.getElementById('np-cattext').value.trim(),
-        desc:     document.getElementById('np-desc').value.trim(),
-        stage:    document.getElementById('np-stage').value.trim(),
-        hotStage: document.getElementById('np-hot').checked,
-        featured: document.getElementById('np-featured').checked,
+        catText:  fCatText.value.trim(),
+        desc:     fDesc.value.trim(),
+        stage:    fStage.value.trim(),
+        hotStage: fHot.checked,
+        featured: fFeat.checked,
       };
-      const file = document.getElementById('np-img').files[0];
+      const file = fImg.files[0];
 
       if(!/^[a-z0-9\-]+$/.test(p.slug)){
         errEl.textContent = 'El slug solo puede tener minúsculas, números y guiones.';
         return;
       }
-      if(existingSlugs.has(p.slug)){
+      if(modalMode === 'add' && existingSlugs.has(p.slug)){
         errEl.textContent = `El slug "${p.slug}" ya existe. Elegí otro.`;
         return;
       }
-      if(!file){
+      if(modalMode === 'add' && !file){
         errEl.textContent = 'Falta la imagen del producto.';
         return;
       }
 
-      btn.disabled = true;
-      btn.textContent = 'Subiendo imagen...';
+      btnSubmit.disabled = true;
       try{
-        // 1) Convert + upload image
-        const blob = await resizeToWebp(file);
-        const b64img = await blobToBase64(blob);
-        await ghPutFile(`assets/products/${p.slug}.webp`, b64img, `admin: nueva imagen ${p.slug}`);
-
-        // 2) Fetch index.html, insert pcard before sentinel, push back
-        btn.textContent = 'Actualizando index.html...';
-        const idx = await ghGetFile('index.html');
-        if(idx.content.indexOf(SENTINEL) === -1){
-          throw new Error('No se encontró el marcador @admin:insert en index.html.');
+        // 1) Upload image (only if provided)
+        if(file){
+          btnSubmit.textContent = 'Subiendo imagen...';
+          const blob = await resizeToWebp(file);
+          const b64img = await blobToBase64(blob);
+          const verb = modalMode === 'add' ? 'nueva' : 'actualiza';
+          await ghPutFile(`assets/products/${p.slug}.webp`, b64img, `admin: ${verb} imagen ${p.slug}`);
         }
+
+        // 2) Update index.html
+        btnSubmit.textContent = 'Actualizando catálogo...';
+        const idx = await ghGetFile('index.html');
         const pcardHtml = buildPcardHtml(p);
-        const newContent = idx.content.replace(SENTINEL, () => pcardHtml + '          ' + SENTINEL);
-        await ghPutText('index.html', newContent, `admin: agrega producto ${p.slug}`, idx.sha);
+        let newContent;
+
+        if(modalMode === 'add'){
+          if(idx.content.indexOf(SENTINEL) === -1){
+            throw new Error('No se encontró el marcador @admin:insert en index.html.');
+          }
+          newContent = idx.content.replace(SENTINEL, () => pcardHtml + '          ' + SENTINEL);
+        } else {
+          const range = findPcardRange(idx.content, editingOrigSlug);
+          if(!range){
+            throw new Error(`No se encontró el producto "${editingOrigSlug}" en index.html.`);
+          }
+          newContent = idx.content.slice(0, range.start) + pcardHtml + idx.content.slice(range.end);
+        }
+        const commitMsg = modalMode === 'add'
+          ? `admin: agrega producto ${p.slug}`
+          : `admin: edita producto ${p.slug}`;
+        await ghPutText('index.html', newContent, commitMsg, idx.sha);
 
         existingSlugs.add(p.slug);
-        toast(`✓ Producto "${p.name}" agregado · GitHub tarda ~1 min en publicar`, 'ok');
+        const action = modalMode === 'add' ? 'agregado' : 'actualizado';
+        toast(`✓ Producto "${p.name}" ${action} · GitHub tarda ~1 min en publicar`, 'ok');
         closeAddModal();
-        // Refresh grid (will re-read index.html from served version after a delay)
         setTimeout(() => loadProducts(), 1500);
       }catch(err){
         errEl.textContent = err.message;
         console.error(err);
       }finally{
-        btn.disabled = false;
-        btn.textContent = 'Agregar producto';
+        btnSubmit.disabled = false;
+        btnSubmit.textContent = modalMode === 'add' ? 'Agregar producto' : 'Guardar cambios';
       }
     });
+
+    // ========== DELETE PRODUCT ==========
+    async function deleteProduct(p, itemEl){
+      const ok = confirm(`¿Borrar "${p.name}"?\n\nSe elimina del catálogo y se borra su imagen del repositorio. Esta acción no se puede deshacer desde el panel.`);
+      if(!ok) return;
+      itemEl.classList.add('is-uploading');
+      try{
+        // 1) Update index.html (remove pcard)
+        const idx = await ghGetFile('index.html');
+        const range = findPcardRange(idx.content, p.slug);
+        if(!range){
+          throw new Error(`No se encontró el producto "${p.slug}" en index.html.`);
+        }
+        const newContent = idx.content.slice(0, range.start) + idx.content.slice(range.end);
+        await ghPutText('index.html', newContent, `admin: borra producto ${p.slug}`, idx.sha);
+
+        // 2) Delete image file (best effort)
+        try{
+          await ghDeleteFile(`assets/products/${p.slug}.webp`, `admin: borra imagen ${p.slug}`);
+        }catch(_){ /* ignore — file may not exist */ }
+
+        existingSlugs.delete(p.slug);
+        toast(`✓ Producto "${p.name}" borrado · GitHub tarda ~1 min en publicar`, 'ok');
+        itemEl.remove();
+      }catch(err){
+        toast('Error: ' + err.message, 'err');
+        console.error(err);
+        itemEl.classList.remove('is-uploading');
+      }
+    }
   })();
   </script>
 </body>

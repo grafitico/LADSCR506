@@ -63,7 +63,9 @@
     });
   }
 
-  // === Entrada discreta al panel admin: triple-click en el copyright del footer ===
+  // === Entrada discreta al panel admin ===
+  // 1) Triple-click en el copyright del footer (ventana de 1.5s)
+  // 2) Atajo de teclado: Ctrl/Cmd + Shift + A
   const yearSmall = year?.closest('small');
   if (yearSmall) {
     let clicks = 0, timer;
@@ -76,7 +78,14 @@
         window.location.href = 'admin.html';
         return;
       }
-      timer = setTimeout(() => { clicks = 0; }, 600);
+      timer = setTimeout(() => { clicks = 0; }, 1500);
     });
   }
+
+  document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+      e.preventDefault();
+      window.location.href = 'admin.html';
+    }
+  });
 })();
