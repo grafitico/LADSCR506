@@ -161,6 +161,80 @@
       .wrap{padding:20px 14px;}
       .gate{padding:24px;}
     }
+
+    /* === Add product card === */
+    .item--add{
+      cursor:pointer; border:2px dashed var(--line);
+      background:transparent; display:grid; place-items:center;
+      min-height:280px; transition:border-color .15s, background .15s;
+    }
+    .item--add:hover{border-color:var(--blue); background:var(--blue-soft);}
+    .item--add__content{text-align:center; color:var(--muted); padding:20px;}
+    .item--add:hover .item--add__content{color:var(--text);}
+    .item--add__plus{
+      width:48px; height:48px; border-radius:50%;
+      background:var(--blue); color:#fff; display:grid;
+      place-items:center; font-size:28px; margin:0 auto 12px;
+      font-weight:300; line-height:1;
+    }
+
+    /* === Modal === */
+    .modal{position:fixed; inset:0; z-index:2000; display:grid; place-items:center; padding:20px;}
+    .modal[hidden]{display:none;}
+    .modal__overlay{
+      position:absolute; inset:0; background:rgba(5,10,18,.7);
+      backdrop-filter:blur(4px);
+    }
+    .modal__dialog{
+      position:relative; background:var(--surface); border:1px solid var(--line);
+      border-radius:var(--radius-lg); max-width:580px; width:100%;
+      max-height:92vh; display:flex; flex-direction:column;
+      box-shadow:0 40px 80px -20px rgba(0,0,0,.6);
+    }
+    .modal__head{
+      display:flex; justify-content:space-between; align-items:center;
+      padding:18px 24px; border-bottom:1px solid var(--line);
+    }
+    .modal__head h2{margin:0; font-size:18px; font-weight:800;}
+    .modal__close{
+      background:transparent; border:0; color:var(--muted); font-size:28px;
+      cursor:pointer; line-height:1; padding:0 4px;
+    }
+    .modal__close:hover{color:var(--text);}
+    .modal__body{padding:18px 24px; overflow-y:auto;}
+    .modal__body .row{margin-bottom:14px;}
+    .modal__body label{
+      display:block; font-size:11px; font-weight:700;
+      text-transform:uppercase; letter-spacing:1px; color:var(--muted);
+      margin:0 0 6px;
+    }
+    .modal__body label .hint{
+      text-transform:none; letter-spacing:0; font-weight:400; color:var(--muted);
+    }
+    .modal__body input[type=text], .modal__body input[type=file],
+    .modal__body select, .modal__body textarea{
+      width:100%; padding:10px 12px; border-radius:8px;
+      background:var(--bg-2); border:1px solid var(--line);
+      color:var(--text); font-size:14px; font-family:inherit;
+    }
+    .modal__body input:focus, .modal__body select:focus, .modal__body textarea:focus{
+      outline:none; border-color:var(--blue);
+    }
+    .modal__body textarea{resize:vertical; min-height:70px;}
+    .row--2col{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+    .check{
+      display:flex; align-items:center; gap:8px; cursor:pointer;
+      font-size:13px; color:var(--text); text-transform:none;
+      letter-spacing:0; font-weight:500; margin-bottom:8px;
+    }
+    .check input{width:auto;}
+    .modal__actions{
+      display:flex; justify-content:flex-end; gap:10px; padding:14px 24px;
+      border-top:1px solid var(--line);
+    }
+    @media (max-width:520px){
+      .row--2col{grid-template-columns:1fr;}
+    }
   </style>
 </head>
 <body>
@@ -231,6 +305,68 @@
 
   </div>
 
+  <!-- ========== ADD PRODUCT MODAL ========== -->
+  <div class="modal" id="modal-add" hidden>
+    <div class="modal__overlay" data-close></div>
+    <div class="modal__dialog" role="dialog" aria-labelledby="modal-add-title" aria-modal="true">
+      <div class="modal__head">
+        <h2 id="modal-add-title">Nuevo producto</h2>
+        <button type="button" class="modal__close" data-close aria-label="Cerrar">&times;</button>
+      </div>
+      <form id="form-add">
+        <div class="modal__body">
+          <div class="row">
+            <label for="np-name">Nombre del producto</label>
+            <input type="text" id="np-name" required maxlength="80" placeholder="Ej: Heavy Cut Compound 400" />
+          </div>
+          <div class="row row--2col">
+            <div>
+              <label for="np-cat">Categoría</label>
+              <select id="np-cat" required></select>
+            </div>
+            <div>
+              <label for="np-brand">Marca</label>
+              <select id="np-brand" required></select>
+            </div>
+          </div>
+          <div class="row">
+            <label for="np-slug">Slug del archivo <span class="hint">— autogenerado, editable. Solo a-z, 0-9 y guiones.</span></label>
+            <input type="text" id="np-slug" required pattern="[a-z0-9\-]+" />
+          </div>
+          <div class="row">
+            <label for="np-cattext">Categoría corta (línea pequeña sobre el nombre)</label>
+            <input type="text" id="np-cattext" required maxlength="60" placeholder="Ej: Shampoo pH neutro · 500 ml" />
+          </div>
+          <div class="row">
+            <label for="np-desc">Descripción</label>
+            <textarea id="np-desc" required maxlength="220" rows="3" placeholder="2 líneas técnicas que vendan el producto"></textarea>
+          </div>
+          <div class="row row--2col">
+            <div>
+              <label for="np-stage">Badge (opcional)</label>
+              <input type="text" id="np-stage" maxlength="14" placeholder="Ej: PASO 1, TOP, PRO" />
+            </div>
+            <div>
+              <label class="hint" style="margin-bottom:6px;">Opciones</label>
+              <label class="check"><input type="checkbox" id="np-hot" /> Badge naranja (destacado)</label>
+              <label class="check"><input type="checkbox" id="np-featured" /> Producto destacado (borde acento)</label>
+            </div>
+          </div>
+          <div class="row">
+            <label for="np-img">Imagen del producto</label>
+            <input type="file" id="np-img" accept="image/*" required />
+            <p class="meta" style="font-size:12px; margin:6px 0 0; color:var(--muted);">JPG/PNG/WebP — se optimiza a WebP 1000px automáticamente.</p>
+          </div>
+          <div class="err-msg" id="add-err"></div>
+        </div>
+        <div class="modal__actions">
+          <button type="button" class="btn btn--ghost btn--sm" data-close>Cancelar</button>
+          <button type="submit" class="btn btn--primary btn--sm" id="btn-add-submit" style="width:auto;">Agregar producto</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <div class="toast" id="toast"></div>
 
   <script>
@@ -241,6 +377,19 @@
     const REPO_OWNER = 'grafitico';
     const REPO_NAME  = 'LADSCR506';
     const BRANCH     = 'main';
+    const SENTINEL   = '<!-- @admin:insert -->';
+    const BRAND_LABELS = {
+      vonixx:'VONIXX', menzerna:'menzerna', malco:'MALCO',
+      vico:'VICO', vintex:'VINTEX', firstar:'FIRSTAR',
+    };
+    const CATEGORIES = [
+      ['pulido','Pulido & Corrección'],
+      ['proteccion','Protección & Cerámica'],
+      ['lavado','Lavado & APC'],
+      ['dressings','Llantas & Dressings'],
+      ['aluminio','Aluminio & Aros'],
+      ['microfibras','Microfibras & Pads'],
+    ];
     // SHA-256 of "LADS2026!" — change this hash to rotate the password.
     // To compute a new hash: open browser console and run:
     //   crypto.subtle.digest('SHA-256', new TextEncoder().encode('TU_NUEVA_PASS'))
@@ -315,6 +464,28 @@
 
     // ========== STATE ==========
     let session = { pat:null, pwd:null };
+    const existingSlugs = new Set();
+
+    // ========== TEXT HELPERS ==========
+    function slugify(s){
+      return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'')
+        .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,40);
+    }
+    function escapeHtml(s){
+      return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+    function b64ToUtf8(b64){
+      const bin = atob(b64.replace(/\n/g,''));
+      const bytes = new Uint8Array(bin.length);
+      for(let i=0;i<bin.length;i++) bytes[i] = bin.charCodeAt(i);
+      return new TextDecoder('utf-8').decode(bytes);
+    }
+    function utf8ToB64(s){
+      const bytes = new TextEncoder().encode(s);
+      let bin = '';
+      for(let i=0;i<bytes.length;i++) bin += String.fromCharCode(bytes[i]);
+      return btoa(bin);
+    }
 
     // ========== LOCK FORM ==========
     document.getElementById('form-lock').addEventListener('submit', async (e) => {
@@ -410,6 +581,8 @@
           const name = card?.querySelector('.pcard__body h3')?.textContent?.trim() || img.alt;
           return { slug: img.dataset.slug, name, alt: img.alt };
         });
+        existingSlugs.clear();
+        products.forEach(p => existingSlugs.add(p.slug));
         renderProducts(products);
       }catch(err){
         grid.innerHTML = '<p class="err-msg" style="grid-column:1/-1;">No se pudo leer index.html: '+err.message+'</p>';
@@ -419,6 +592,20 @@
     function renderProducts(products){
       const grid = document.getElementById('grid');
       grid.innerHTML = '';
+
+      // "+ Agregar producto" card
+      const addCard = document.createElement('div');
+      addCard.className = 'item item--add';
+      addCard.innerHTML = `
+        <div class="item--add__content">
+          <div class="item--add__plus">+</div>
+          <strong style="display:block; color:var(--text); margin-bottom:4px;">Agregar producto</strong>
+          <span style="font-size:12px;">Nombre, marca, descripción e imagen</span>
+        </div>
+      `;
+      addCard.addEventListener('click', openAddModal);
+      grid.appendChild(addCard);
+
       products.forEach(p => {
         const it = document.createElement('div');
         it.className = 'item';
@@ -548,6 +735,173 @@
         itemEl.classList.remove('is-uploading');
       }
     }
+
+    // ========== ADD PRODUCT: MODAL ==========
+    const modal = document.getElementById('modal-add');
+    const formAdd = document.getElementById('form-add');
+    const fName = document.getElementById('np-name');
+    const fSlug = document.getElementById('np-slug');
+    const fCat  = document.getElementById('np-cat');
+    const fBrand= document.getElementById('np-brand');
+    let slugManuallyEdited = false;
+
+    // Populate selects once
+    CATEGORIES.forEach(([v,label]) => {
+      const o = document.createElement('option');
+      o.value = v; o.textContent = label;
+      fCat.appendChild(o);
+    });
+    Object.entries(BRAND_LABELS).forEach(([v,label]) => {
+      const o = document.createElement('option');
+      o.value = v; o.textContent = label;
+      fBrand.appendChild(o);
+    });
+
+    function openAddModal(){
+      formAdd.reset();
+      document.getElementById('add-err').textContent = '';
+      slugManuallyEdited = false;
+      modal.hidden = false;
+      setTimeout(() => fName.focus(), 50);
+    }
+    function closeAddModal(){ modal.hidden = true; }
+
+    modal.querySelectorAll('[data-close]').forEach(el => {
+      el.addEventListener('click', closeAddModal);
+    });
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape' && !modal.hidden) closeAddModal();
+    });
+
+    fName.addEventListener('input', () => {
+      if(!slugManuallyEdited){
+        const brand = fBrand.value;
+        const base = brand ? `${brand}-${slugify(fName.value)}` : slugify(fName.value);
+        fSlug.value = base.replace(/^-+|-+$/g,'');
+      }
+    });
+    fBrand.addEventListener('change', () => {
+      if(!slugManuallyEdited) fName.dispatchEvent(new Event('input'));
+    });
+    fSlug.addEventListener('input', () => { slugManuallyEdited = true; });
+
+    // ========== ADD PRODUCT: HTML BUILDER ==========
+    function buildPcardHtml(p){
+      const featuredCls = p.featured ? ' pcard--featured' : '';
+      const hotCls      = p.hotStage ? ' pcard__stage--hot' : '';
+      const stageHtml   = p.stage
+        ? `\n              <span class="pcard__stage${hotCls}">${escapeHtml(p.stage)}</span>`
+        : '';
+      const brandLabel  = BRAND_LABELS[p.brand] || p.brand;
+      const waText      = encodeURIComponent(`Hola, me interesa ${p.name}`);
+      return `          <article class="pcard${featuredCls}" data-cat="${p.cat}" data-brand="${p.brand}">
+            <div class="pcard__media">
+              <span class="pcard__brand">${escapeHtml(brandLabel)}</span>
+              <img src="assets/products/${p.slug}.webp" alt="${escapeHtml(p.name)}" loading="lazy" data-slug="${p.slug}" onerror="this.onerror=null;this.src='assets/products/${p.slug}.svg'"/>${stageHtml}
+            </div>
+            <div class="pcard__body">
+              <p class="pcard__cat">${escapeHtml(p.catText)}</p>
+              <h3>${escapeHtml(p.name)}</h3>
+              <p>${escapeHtml(p.desc)}</p>
+              <a href="https://wa.me/50685638296?text=${waText}" class="pcard__cta" target="_blank" rel="noopener">
+                <svg class="ico ico--sm"><use href="#i-wa"/></svg> Consultar
+              </a>
+            </div>
+          </article>
+
+`;
+    }
+
+    // ========== ADD PRODUCT: GITHUB FILE HELPERS ==========
+    async function ghGetFile(path){
+      const r = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}?ref=${BRANCH}&_=${Date.now()}`, {
+        headers:{ Authorization:`Bearer ${session.pat}`, Accept:'application/vnd.github+json' }
+      });
+      if(!r.ok) throw new Error('GitHub GET '+path+' '+r.status);
+      const j = await r.json();
+      return { sha: j.sha, content: b64ToUtf8(j.content) };
+    }
+    async function ghPutText(path, text, message, sha){
+      const r = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`, {
+        method:'PUT',
+        headers:{
+          Authorization:`Bearer ${session.pat}`,
+          Accept:'application/vnd.github+json',
+          'Content-Type':'application/json',
+        },
+        body: JSON.stringify({ message, content: utf8ToB64(text), branch: BRANCH, sha }),
+      });
+      if(!r.ok){
+        const t = await r.text();
+        throw new Error('GitHub PUT '+path+' '+r.status+': '+t.substring(0,200));
+      }
+      return r.json();
+    }
+
+    // ========== ADD PRODUCT: FORM SUBMIT ==========
+    formAdd.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const errEl = document.getElementById('add-err');
+      const btn   = document.getElementById('btn-add-submit');
+      errEl.textContent = '';
+
+      const p = {
+        name:     fName.value.trim(),
+        slug:     fSlug.value.trim(),
+        cat:      fCat.value,
+        brand:    fBrand.value,
+        catText:  document.getElementById('np-cattext').value.trim(),
+        desc:     document.getElementById('np-desc').value.trim(),
+        stage:    document.getElementById('np-stage').value.trim(),
+        hotStage: document.getElementById('np-hot').checked,
+        featured: document.getElementById('np-featured').checked,
+      };
+      const file = document.getElementById('np-img').files[0];
+
+      if(!/^[a-z0-9\-]+$/.test(p.slug)){
+        errEl.textContent = 'El slug solo puede tener minúsculas, números y guiones.';
+        return;
+      }
+      if(existingSlugs.has(p.slug)){
+        errEl.textContent = `El slug "${p.slug}" ya existe. Elegí otro.`;
+        return;
+      }
+      if(!file){
+        errEl.textContent = 'Falta la imagen del producto.';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Subiendo imagen...';
+      try{
+        // 1) Convert + upload image
+        const blob = await resizeToWebp(file);
+        const b64img = await blobToBase64(blob);
+        await ghPutFile(`assets/products/${p.slug}.webp`, b64img, `admin: nueva imagen ${p.slug}`);
+
+        // 2) Fetch index.html, insert pcard before sentinel, push back
+        btn.textContent = 'Actualizando index.html...';
+        const idx = await ghGetFile('index.html');
+        if(idx.content.indexOf(SENTINEL) === -1){
+          throw new Error('No se encontró el marcador @admin:insert en index.html.');
+        }
+        const pcardHtml = buildPcardHtml(p);
+        const newContent = idx.content.replace(SENTINEL, () => pcardHtml + '          ' + SENTINEL);
+        await ghPutText('index.html', newContent, `admin: agrega producto ${p.slug}`, idx.sha);
+
+        existingSlugs.add(p.slug);
+        toast(`✓ Producto "${p.name}" agregado · GitHub tarda ~1 min en publicar`, 'ok');
+        closeAddModal();
+        // Refresh grid (will re-read index.html from served version after a delay)
+        setTimeout(() => loadProducts(), 1500);
+      }catch(err){
+        errEl.textContent = err.message;
+        console.error(err);
+      }finally{
+        btn.disabled = false;
+        btn.textContent = 'Agregar producto';
+      }
+    });
   })();
   </script>
 </body>
